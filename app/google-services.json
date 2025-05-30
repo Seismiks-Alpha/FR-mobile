@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "562855494147",
+    "project_id": "seismiks-nyam",
+    "storage_bucket": "seismiks-nyam.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562855494147:android:75704a995a2ecaa3ed4436",
+        "android_client_info": {
+          "package_name": "com.reza.nyamapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562855494147-86eqcdnpnkvq5vkp9e5je7oadj5jr7q4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reza.nyamapplication",
+            "certificate_hash": "36e5c97442e68c12f243abb7098be2666843c6f2"
+          }
+        },
+        {
+          "client_id": "562855494147-c6ilobhoahuijhoosp8qq8uqtmr0ku76.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTUtwhomfwtaXyavJeZQctQqxpm751Htw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562855494147-c6ilobhoahuijhoosp8qq8uqtmr0ku76.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

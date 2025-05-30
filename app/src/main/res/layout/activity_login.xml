@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.autherization.LoginActivity">
+
+    <TextView
+        android:id="@+id/tv_login_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nyam_mobile"
+        android:fontFamily="@font/jockey_one_font"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        app:cardBackgroundColor="@color/cream"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_title"
+        app:cardCornerRadius="30dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_email"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_email"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:startIconDrawable="@drawable/ic_email">
+
+                <com.reza.nyamapp.ui.customEditText.MyEmailEditText
+                    android:id="@+id/ed_email"
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:endIconMode="password_toggle"
+                app:layout_constraintTop_toBottomOf="@+id/til_email"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:startIconDrawable="@drawable/ic_key">
+
+                <com.reza.nyamapp.ui.customEditText.MyPasswordEditText
+                    android:id="@+id/ed_password"
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:ems="10"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
+                app:cornerRadius="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/login"
+                android:backgroundTint="@color/yellow"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/til_password"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/btn_google"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/btn_login"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_login"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                app:layout_constraintTop_toBottomOf="@id/btn_google"
+                app:dividerColor="@color/black" />
+
+            <TextView
+                android:id="@id/tv_login_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Belum Punya Akun?"
+                android:fontFamily="@font/jockey_one_font"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/divider_login"
+                android:gravity="center"
+                android:layout_marginVertical="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_register"
+                app:cornerRadius="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/register"
+                android:backgroundTint="@color/background"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_login_register"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progressTint="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

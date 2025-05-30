@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.heightWeight.HeightWeightSettingActivity">
+
+    <TextView
+        android:id="@+id/tv_height_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tinggi Badan (cm)"
+        android:fontFamily="@font/jockey_one_font"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/til_height"
+        app:layout_constraintStart_toStartOf="@id/til_height"
+        app:layout_constraintEnd_toEndOf="@id/til_height"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_height"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/cream"
+        app:layout_constraintTop_toBottomOf="@id/tv_height_title"
+        app:layout_constraintEnd_toStartOf="@id/til_weight"
+        app:layout_constraintBottom_toTopOf="@id/tv_gender_title"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_height"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:fontFamily="@font/jockey_one_font"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:text="00" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_weight_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Berat Badan (kg)"
+        android:fontFamily="@font/jockey_one_font"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/til_weight"
+        app:layout_constraintEnd_toEndOf="@id/til_weight"
+        app:layout_constraintBottom_toTopOf="@id/til_weight"
+        app:layout_constraintStart_toEndOf="@id/tv_height_title" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_weight"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/cream"
+        app:placeholderText="00"
+        app:layout_constraintTop_toBottomOf="@id/tv_weight_title"
+        app:layout_constraintStart_toEndOf="@id/til_height"
+        app:layout_constraintBottom_toTopOf="@id/tv_gender_title"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_weight"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:fontFamily="@font/jockey_one_font"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:text="00" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_gender_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jenis Kelamin"
+        android:fontFamily="@font/jockey_one_font"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/til_height"
+        app:layout_constraintBottom_toTopOf="@id/iv_male"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_male"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:src="@drawable/iv_male_active"
+        app:layout_constraintTop_toBottomOf="@id/tv_gender_title"
+        app:layout_constraintEnd_toStartOf="@id/iv_female"
+        app:layout_constraintBottom_toTopOf="@id/tv_age_title"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_female"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:padding="8dp"
+        android:src="@drawable/iv_female_inactive"
+        app:layout_constraintTop_toBottomOf="@id/tv_gender_title"
+        app:layout_constraintStart_toEndOf="@id/iv_male"
+        app:layout_constraintBottom_toTopOf="@id/tv_age_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_age_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Umur"
+        android:fontFamily="@font/jockey_one_font"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/iv_male"
+        app:layout_constraintBottom_toTopOf="@id/til_age"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_age"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/cream"
+        app:placeholderText="00"
+        app:layout_constraintTop_toBottomOf="@id/tv_age_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/btn_save" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_age"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="00"
+            android:textSize="40sp"
+            android:fontFamily="@font/jockey_one_font"
+            android:gravity="center"
+            android:ems="10"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:fontFamily="@font/jockey_one_font"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/cream"
+        app:layout_constraintTop_toBottomOf="@id/til_age"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
