@@ -17,7 +17,6 @@ object AppPreferences {
         editor.apply()
     }
 
-
     private fun getSharedPreferences(context: Context): SharedPreferences {
         return context.getSharedPreferences(AppPreferences.PREF_NAME, Context.MODE_PRIVATE)
     }

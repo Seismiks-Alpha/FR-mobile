@@ -5,21 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.reza.nyamapp.R
 import com.reza.nyamapp.ViewModelFactory
-import com.reza.nyamapp.databinding.ActivityUserSettingBinding
 import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.data.remote.retrofit.Photo
+import com.reza.nyamapp.databinding.ActivityUserSettingBinding
 
 class UserSettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserSettingBinding

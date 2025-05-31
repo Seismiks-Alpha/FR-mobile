@@ -1,6 +1,5 @@
 package com.reza.nyamapp.ui.history
 
-import android.graphics.pdf.models.ListItem
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.reza.nyamapp.R
 import com.reza.nyamapp.data.local.ScanResult
 import com.reza.nyamapp.databinding.RowHistoryBinding
-import com.reza.nyamapp.utils.Date
 import com.reza.nyamapp.utils.convertLongToTime
 
 class HistoryAdapter(private val clickListener: (ScanResult) -> Unit) :

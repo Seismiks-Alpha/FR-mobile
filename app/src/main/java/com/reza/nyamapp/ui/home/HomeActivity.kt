@@ -21,11 +21,11 @@ import com.reza.nyamapp.R
 import com.reza.nyamapp.ViewModelFactory
 import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.databinding.ActivityHomeBinding
-import com.reza.nyamapp.ui.setting.SettingActivity
 import com.reza.nyamapp.ui.camera.CameraActivity
 import com.reza.nyamapp.ui.chat.ChatActivity
-import com.reza.nyamapp.ui.history.HistoryActivity
 import com.reza.nyamapp.ui.heightWeight.HeightWeightSettingActivity
+import com.reza.nyamapp.ui.history.HistoryActivity
+import com.reza.nyamapp.ui.setting.SettingActivity
 import java.util.Calendar
 
 class HomeActivity : AppCompatActivity() {

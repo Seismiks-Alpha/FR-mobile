@@ -1,7 +1,6 @@
 package com.reza.nyamapp.ui.heightWeight
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.data.remote.RemoteRepository

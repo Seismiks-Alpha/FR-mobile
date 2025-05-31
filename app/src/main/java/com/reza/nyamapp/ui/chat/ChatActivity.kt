@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.reza.nyamapp.R
 import com.reza.nyamapp.ViewModelFactory
 import com.reza.nyamapp.databinding.ActivityChatBinding
-import com.reza.nyamapp.utils.AppPreferences.KEY_USER_ID
 import com.reza.nyamapp.utils.AppPreferences.getUserIdFromPreferences
 
 class ChatActivity : AppCompatActivity() {

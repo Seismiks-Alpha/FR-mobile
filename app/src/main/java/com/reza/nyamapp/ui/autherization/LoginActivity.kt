@@ -24,12 +24,12 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import com.reza.nyamapp.R
 import com.reza.nyamapp.ViewModelFactory
+import com.reza.nyamapp.data.Result
+import com.reza.nyamapp.data.remote.response.SyncProfileResponse
 import com.reza.nyamapp.databinding.ActivityLoginBinding
 import com.reza.nyamapp.ui.home.HomeActivity
 import com.reza.nyamapp.utils.AppPreferences.saveUserIdToPreferences
 import kotlinx.coroutines.launch
-import com.reza.nyamapp.data.Result
-import com.reza.nyamapp.data.remote.response.SyncProfileResponse
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -165,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
                                                 Toast.makeText(
                                                     this@LoginActivity,
                                                     "Gagal sinkronisasi profil: ${result.error}",
-                                                     Toast.LENGTH_LONG
+                                                    Toast.LENGTH_LONG
                                                 ).show()
                                                 // Anda bisa memilih untuk tetap navigasi (updateUI(auth.currentUser))
                                                 // atau tetap di halaman login, atau menampilkan pesan error yang lebih jelas.
@@ -214,22 +214,22 @@ class LoginActivity : AppCompatActivity() {
                                             }
 
                                             is Result.Success -> {
+                                                showLoading(false)
                                                 Log.d(
                                                     "LoginActivity",
                                                     "Profile Sync: Success - ${result.data}"
                                                 )
                                                 profileViewModel.profile.removeObserver(this) // Hentikan observasi setelah selesai
-                                                showLoading(false)
                                                 updateUI(auth.currentUser) // Pindah ke HomeActivity
                                             }
 
                                             is Result.Error -> {
+                                                showLoading(false)
                                                 Log.e(
                                                     "LoginActivity",
                                                     "Profile Sync: Error - ${result.error}"
                                                 )
                                                 profileViewModel.profile.removeObserver(this) // Hentikan observasi setelah selesai
-                                                showLoading(false)
                                                 Toast.makeText(
                                                     this@LoginActivity,
                                                     "Gagal sinkronisasi profil: ${result.error}",

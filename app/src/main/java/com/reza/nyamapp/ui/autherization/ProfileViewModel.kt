@@ -3,13 +3,12 @@ package com.reza.nyamapp.ui.autherization
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.data.remote.RemoteRepository
 import com.reza.nyamapp.data.remote.response.SyncProfileResponse
 import kotlinx.coroutines.launch
-import com.reza.nyamapp.data.Result
 
 class ProfileViewModel(private val remoteRepository: RemoteRepository) : ViewModel() {
 //    private val _syncLoading = MutableLiveData<Boolean>(false)

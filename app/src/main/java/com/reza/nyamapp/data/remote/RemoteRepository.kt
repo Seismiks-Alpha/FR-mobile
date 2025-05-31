@@ -3,15 +3,14 @@ package com.reza.nyamapp.data.remote
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.reza.nyamapp.data.remote.response.ChatResponse
-import com.reza.nyamapp.data.remote.retrofit.ApiService
-import com.reza.nyamapp.data.remote.retrofit.chat.PostChat
 import com.reza.nyamapp.data.Result
-import com.reza.nyamapp.data.remote.response.Profile
+import com.reza.nyamapp.data.remote.response.ChatResponse
 import com.reza.nyamapp.data.remote.response.ProfileResponse
 import com.reza.nyamapp.data.remote.response.SyncProfileResponse
+import com.reza.nyamapp.data.remote.retrofit.ApiService
 import com.reza.nyamapp.data.remote.retrofit.Photo
 import com.reza.nyamapp.data.remote.retrofit.ProfileUser
+import com.reza.nyamapp.data.remote.retrofit.chat.PostChat
 
 class RemoteRepository private constructor(private val apiService: ApiService) {
     suspend fun postQuestion(

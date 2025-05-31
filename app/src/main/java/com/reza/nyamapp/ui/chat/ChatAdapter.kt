@@ -2,20 +2,14 @@ package com.reza.nyamapp.ui.chat
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginStart
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.reza.nyamapp.R
 import com.reza.nyamapp.data.local.Chat
-import com.reza.nyamapp.data.local.ScanResult
 import com.reza.nyamapp.databinding.RowMessageBinding
-import com.reza.nyamapp.utils.Date.convertLongToTime
-import com.reza.nyamapp.utils.convertLongToTime
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

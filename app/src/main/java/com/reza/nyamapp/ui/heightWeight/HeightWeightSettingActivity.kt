@@ -16,7 +16,6 @@ import com.reza.nyamapp.ViewModelFactory
 import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.data.remote.retrofit.ProfileUser
 import com.reza.nyamapp.databinding.ActivityHeightWeightSettingBinding
-import com.reza.nyamapp.ui.MainActivity
 import com.reza.nyamapp.ui.home.HomeActivity
 import kotlinx.coroutines.launch
 

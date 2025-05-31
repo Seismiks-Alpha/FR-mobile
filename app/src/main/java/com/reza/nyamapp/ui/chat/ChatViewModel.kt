@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.data.local.Chat
 import com.reza.nyamapp.data.remote.RemoteRepository
 import com.reza.nyamapp.data.remote.response.ChatResponse
-import kotlinx.coroutines.launch
-import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.utils.ChatSenders
+import kotlinx.coroutines.launch
 
 class ChatViewModel(private val remoteRepository: RemoteRepository) : ViewModel() {
 

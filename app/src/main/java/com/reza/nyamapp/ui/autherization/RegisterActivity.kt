@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.reza.nyamapp.databinding.ActivityRegisterBinding
+import com.reza.nyamapp.ui.heightWeight.HeightWeightSettingActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -34,7 +35,11 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.edPassword.text.toString()
             val confirmPassword = binding.edConfirmPassword.text.toString()
             if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(this, "Tolong lengkapi email, password, dan konfirmasi password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Tolong lengkapi email, password, dan konfirmasi password",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             } else if (password != confirmPassword) {
                 Toast.makeText(
@@ -69,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, HeightWeightSettingActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()

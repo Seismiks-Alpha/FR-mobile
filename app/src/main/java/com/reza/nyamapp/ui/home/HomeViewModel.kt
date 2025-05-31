@@ -1,16 +1,12 @@
 package com.reza.nyamapp.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.data.local.ResultRepository
 import com.reza.nyamapp.data.remote.RemoteRepository
-import kotlinx.coroutines.launch
-import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.data.remote.response.ProfileResponse
-import com.reza.nyamapp.data.remote.response.SyncProfileResponse
 
 class HomeViewModel(
     private val repository: ResultRepository,
