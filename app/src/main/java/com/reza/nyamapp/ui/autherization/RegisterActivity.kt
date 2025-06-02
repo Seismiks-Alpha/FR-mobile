@@ -7,16 +7,36 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.Firebase
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import com.reza.nyamapp.R
+import com.reza.nyamapp.ViewModelFactory
+import com.reza.nyamapp.data.Result
+import com.reza.nyamapp.data.remote.response.SyncProfileResponse
 import com.reza.nyamapp.databinding.ActivityRegisterBinding
 import com.reza.nyamapp.ui.heightWeight.HeightWeightSettingActivity
+import com.reza.nyamapp.utils.AppPreferences.saveUserIdToPreferences
+import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
+
+    private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +46,16 @@ class RegisterActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        profileViewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
+
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.btnGoogle.setOnClickListener {
+            signIn()
         }
 
         binding.btnRegister.setOnClickListener {
@@ -62,6 +89,52 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     showLoading(false)
                     val user = auth.currentUser
+                    user?.uid?.let {
+                        saveUserId(user)
+                    }
+                    user?.getIdToken(true)?.addOnSuccessListener { result ->
+                        val token = result.token
+                        if (token != null) {
+                            lifecycleScope.launch {
+                                profileViewModel.syncProfile(token)
+                            }
+                            profileViewModel.profile.observe(
+                                this@RegisterActivity,
+                                object : Observer<Result<SyncProfileResponse>> {
+                                    override fun onChanged(result: Result<SyncProfileResponse>) {
+                                        when (result) {
+                                            is Result.Loading -> {
+                                                Log.d("RegisterActivity", "Profile Sync: Loading...")
+                                            }
+
+                                            is Result.Success -> {
+                                                Log.d(
+                                                    "RegisterActivity",
+                                                    "Profile Sync: Success - ${result.data}"
+                                                )
+                                                profileViewModel.profile.removeObserver(this)
+                                                showLoading(false)
+                                                updateUI(auth.currentUser)
+                                            }
+
+                                            is Result.Error -> {
+                                                Log.e(
+                                                    "RegisterActivity",
+                                                    "Profile Sync: Error - ${result.error}"
+                                                )
+                                                profileViewModel.profile.removeObserver(this)
+                                                showLoading(false)
+                                                Toast.makeText(
+                                                    this@RegisterActivity,
+                                                    "Gagal sinkronisasi profil: ${result.error}",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                            }
+                                        }
+                                    }
+                                })
+                        }
+                    }
                     Log.d("RegisterActivity", "createUserWithEmail:success")
                     updateUI(user)
                 } else {
@@ -71,6 +144,130 @@ class RegisterActivity : AppCompatActivity() {
                     showLoading(false)
                 }
             }
+    }
+
+    private fun signIn() {
+        val credentialManager = CredentialManager.create(this)
+
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setServerClientId(getString(R.string.web_client_id))
+            .build()
+
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        lifecycleScope.launch {
+            try {
+                val result: GetCredentialResponse =
+                    credentialManager.getCredential(
+                        request = request,
+                        context = this@RegisterActivity,
+                    )
+                handleSignIn(result)
+            } catch (e: GetCredentialException) {
+                Log.d("Error", e.message.toString())
+            }
+        }
+    }
+
+    private fun handleSignIn(result: GetCredentialResponse) {
+        when (val credential = result.credential) {
+            is CustomCredential -> {
+                if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                    try {
+                        val googleIdTokenCredential =
+                            GoogleIdTokenCredential.createFrom(credential.data)
+                        firebaseAuthWithGoogle(googleIdTokenCredential.idToken)
+                    } catch (e: Exception) {
+                        Log.e("RegisterActivity", "Error creating GoogleIdTokenCredential", e)
+                    }
+                } else {
+                    Log.e("RegisterActivity", "Unexpected type of credential")
+                }
+            }
+
+            else -> {
+                Log.e("RegisterActivity", "Unexpected type of credential")
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        showLoading(true)
+        val credential: AuthCredential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d("LoginActivity", "signInWithCredential:success")
+                    val user: FirebaseUser? = auth.currentUser
+                    user?.uid?.let {
+                        saveUserId(user)
+                    }
+                    user?.getIdToken(true)?.addOnSuccessListener { result ->
+                        val token = result.token
+                        if (token != null) {
+                            lifecycleScope.launch {
+                                profileViewModel.syncProfile(token)
+                            }
+                            profileViewModel.profile.observe(
+                                this@RegisterActivity,
+                                object : Observer<Result<SyncProfileResponse>> {
+                                    override fun onChanged(result: Result<SyncProfileResponse>) {
+                                        when (result) {
+                                            is Result.Loading -> {
+                                                Log.d("LoginActivity", "Profile Sync: Loading...")
+                                                // showLoading(true) sudah dipanggil di awal
+                                            }
+
+                                            is Result.Success -> {
+                                                Log.d(
+                                                    "LoginActivity",
+                                                    "Profile Sync: Success - ${result.data}"
+                                                )
+                                                profileViewModel.profile.removeObserver(this) // Hentikan observasi setelah selesai
+                                                showLoading(false)
+                                                updateUI(auth.currentUser) // Pindah ke HomeActivity
+                                            }
+
+                                            is Result.Error -> {
+                                                Log.e(
+                                                    "LoginActivity",
+                                                    "Profile Sync: Error - ${result.error}"
+                                                )
+                                                profileViewModel.profile.removeObserver(this) // Hentikan observasi setelah selesai
+                                                showLoading(false)
+                                                Toast.makeText(
+                                                    this@RegisterActivity,
+                                                    "Gagal sinkronisasi profil: ${result.error}",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                                updateUI(auth.currentUser)
+                                            }
+                                        }
+                                    }
+                                })
+                        }
+                    }
+                } else {
+                    Log.w("LoginActivity", "signInWithCredential:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT)
+                        .show()
+                    updateUI(null)
+                    showLoading(false)
+                }
+            }
+    }
+
+    private fun saveUserId(firebaseUser: FirebaseUser?) {
+        val userId = firebaseUser?.uid
+        if (userId != null) {
+            saveUserIdToPreferences(applicationContext, userId)
+            Log.d("LoginActivity", "saveUserId: $userId")
+        } else {
+            Log.d("LoginActivity", "saveUserId: User ID is null")
+        }
     }
 
     private fun updateUI(user: FirebaseUser?) {
