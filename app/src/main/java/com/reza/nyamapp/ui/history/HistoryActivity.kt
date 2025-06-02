@@ -29,7 +29,7 @@ class HistoryActivity : AppCompatActivity() {
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbarHistoryActivity)
+        setSupportActionBar(binding.myToolbar)
         supportActionBar?.title = getString(R.string.scan_history)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

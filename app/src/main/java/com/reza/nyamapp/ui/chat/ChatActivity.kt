@@ -34,6 +34,11 @@ class ChatActivity : AppCompatActivity() {
 
         val userId = getUserIdFromPreferences(applicationContext)
 
+        setSupportActionBar(binding.myToolbar)
+        supportActionBar?.title = getString(R.string.chatbot_text)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         progressBar = findViewById(R.id.progressBar)
 
         rvChat = binding.rvChatList
@@ -101,5 +106,10 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }

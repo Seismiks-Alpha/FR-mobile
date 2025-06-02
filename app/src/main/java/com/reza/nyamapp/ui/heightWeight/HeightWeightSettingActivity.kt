@@ -28,7 +28,7 @@ class HeightWeightSettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        gender = "male"
+        gender = "Laki=laki"
 
         auth = Firebase.auth
 
@@ -39,7 +39,7 @@ class HeightWeightSettingActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory).get(HeightWeightViewModel::class.java)
 
         binding.ivMale.setOnClickListener {
-            gender = "male"
+            gender = "Laki-laki"
             binding.ivMale.setImageResource(R.drawable.iv_male_active)
             binding.ivFemale.setImageResource(R.drawable.iv_female_inactive)
             binding.ivMale.setBackgroundColor(getColor(R.color.white))
@@ -47,7 +47,7 @@ class HeightWeightSettingActivity : AppCompatActivity() {
         }
 
         binding.ivFemale.setOnClickListener {
-            gender = "female"
+            gender = "Perempuan"
             binding.ivMale.setImageResource(R.drawable.iv_male_inactive)
             binding.ivFemale.setImageResource(R.drawable.iv_female_active)
             binding.ivFemale.setBackgroundColor(getColor(R.color.white))

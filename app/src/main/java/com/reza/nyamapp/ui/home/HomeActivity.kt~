@@ -95,9 +95,9 @@ class HomeActivity : AppCompatActivity() {
 
                             is Result.Success -> {
                                 Log.d("HomeActivity", "Success: ${result.data}")
-                                binding.tvUserName.text = result.data.name
-                                binding.tvHeightValue.text = result.data.height.toString()
-                                binding.tvWeightValue.text = result.data.weight.toString()
+                                binding.tvUserName.text = result.data.displayName
+                                binding.tvHeightValue.text = result.data.profile?.height.toString()
+                                binding.tvWeightValue.text = result.data.profile?.weight.toString()
                             }
 
                             is Result.Error -> {

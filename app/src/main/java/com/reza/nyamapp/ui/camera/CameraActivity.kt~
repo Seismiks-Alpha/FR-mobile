@@ -67,7 +67,6 @@ class CameraActivity : AppCompatActivity() {
             val intent = Intent(this, ScanResultActivity::class.java)
             intent.putExtra(ScanResultActivity.EXTRA_IMAGE_URI, currentImageUri.toString())
             startActivity(intent)
-            finish()
         }
         binding.btnGallery.setOnClickListener { startGallery() }
 

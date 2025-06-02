@@ -9,11 +9,26 @@
     tools:context=".ui.setting.UserSettingActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/my_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                app:titleTextColor="@color/white"
+                app:subtitleTextColor="@color/white"
+                android:layout_height="?attr/actionBarSize" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <ImageView
             android:id="@+id/iv_user_profile"
@@ -24,19 +39,8 @@
             app:layout_constraintBottom_toTopOf="@id/tv_username_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/user" />
-
-        <ImageButton
-            android:id="@+id/btn_iv_user"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@color/cream"
-            android:src="@drawable/ic_camera"
-            app:layout_constraintBottom_toBottomOf="@id/iv_user_profile"
-            app:layout_constraintEnd_toEndOf="@id/iv_user_profile"
-            app:layout_constraintStart_toEndOf="@id/iv_user_profile"
-            app:layout_constraintTop_toBottomOf="@id/iv_user_profile" />
+            app:layout_constraintTop_toBottomOf="@id/my_appbar"
+            android:src="@drawable/user" />
 
         <TextView
             android:id="@+id/tv_username_title"
@@ -45,8 +49,8 @@
             android:layout_margin="32dp"
             android:fontFamily="@font/jockey_one_font"
             android:text="Username"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textSize="21sp"
             app:layout_constraintBottom_toTopOf="@id/tv_username"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +62,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/jockey_one_font"
             android:text="Username"
-            android:textColor="@color/white"
+            android:textColor="@color/cream"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,8 +75,8 @@
             android:layout_margin="32dp"
             android:fontFamily="@font/jockey_one_font"
             android:text="Email"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textSize="21sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_username" />
@@ -83,7 +87,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/jockey_one_font"
             android:text="Email"
-            android:textColor="@color/white"
+            android:textColor="@color/cream"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,8 +100,8 @@
             android:layout_margin="32dp"
             android:fontFamily="@font/jockey_one_font"
             android:text="Umur"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textSize="21sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_email" />
@@ -108,7 +112,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/jockey_one_font"
             android:text="99"
-            android:textColor="@color/white"
+            android:textColor="@color/cream"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -121,8 +125,8 @@
             android:layout_margin="32dp"
             android:fontFamily="@font/jockey_one_font"
             android:text="Jenis Kelamin"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textSize="21sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_age" />
@@ -133,42 +137,11 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/jockey_one_font"
             android:text="Laki-laki"
-            android:textColor="@color/white"
+            android:textColor="@color/cream"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_gender_title" />
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/red"
-            android:fontFamily="@font/jockey_one_font"
-            android:padding="10dp"
-            android:layout_margin="16dp"
-            android:text="Batal"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_save"
-            app:layout_constraintTop_toBottomOf="@id/tv_gender" />
-
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/cream"
-            android:fontFamily="@font/jockey_one_font"
-            android:padding="10dp"
-            android:layout_margin="16dp"
-            android:text="Simpan"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_cancel"
-            app:layout_constraintTop_toBottomOf="@id/tv_gender" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

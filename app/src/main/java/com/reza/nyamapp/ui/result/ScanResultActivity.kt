@@ -48,6 +48,7 @@ class ScanResultActivity : AppCompatActivity() {
                 val intent = Intent(this, CameraActivity::class.java)
                 intent.putExtra(CALORIES, totalKalori.toString())
                 startActivity(intent)
+                finish()
             }
 
         }

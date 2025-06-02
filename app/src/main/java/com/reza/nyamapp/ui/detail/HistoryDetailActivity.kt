@@ -33,7 +33,7 @@ class HistoryDetailActivity : AppCompatActivity() {
         binding = ActivityHistoryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbarDetailHistoryActivity)
+        setSupportActionBar(binding.myToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 

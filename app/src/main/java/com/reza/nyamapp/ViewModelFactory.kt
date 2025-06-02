@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.reza.nyamapp.data.local.ResultRepository
 import com.reza.nyamapp.data.remote.RemoteRepository
 import com.reza.nyamapp.ui.autherization.ProfileViewModel
+import com.reza.nyamapp.ui.camera.CameraViewModel
 import com.reza.nyamapp.ui.chat.ChatViewModel
 import com.reza.nyamapp.ui.detail.HistoryDetailViewModel
 import com.reza.nyamapp.ui.heightWeight.HeightWeightViewModel
@@ -33,6 +34,10 @@ class ViewModelFactory private constructor(
         when {
             modelClass.isAssignableFrom(ScanResultViewModel::class.java) -> {
                 ScanResultViewModel(resultRepository) as T
+            }
+
+            modelClass.isAssignableFrom(CameraViewModel::class.java) -> {
+                CameraViewModel(RemoteRepository) as T
             }
 
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {

@@ -2,13 +2,17 @@ package com.reza.nyamapp.data.remote.retrofit
 
 import com.reza.nyamapp.data.remote.response.ChatResponse
 import com.reza.nyamapp.data.remote.response.ProfileResponse
+import com.reza.nyamapp.data.remote.response.RecognizeResponse
 import com.reza.nyamapp.data.remote.response.SyncProfileResponse
 import com.reza.nyamapp.data.remote.retrofit.chat.PostChat
+import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 
 interface ApiService {
     @POST("api/auth/sync")
@@ -38,5 +42,12 @@ interface ApiService {
         @Header("Authorization") Bearer: String,
         @Body photo: Photo
     ): Photo
+
+    @Multipart
+    @POST("api/recognize")
+    suspend fun postRecognize(
+        @Header("Authorization") Bearer: String,
+        @Part file: MultipartBody.Part
+    ): RecognizeResponse
 
 }

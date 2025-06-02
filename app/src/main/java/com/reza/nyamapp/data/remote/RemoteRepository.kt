@@ -6,11 +6,14 @@ import androidx.lifecycle.liveData
 import com.reza.nyamapp.data.Result
 import com.reza.nyamapp.data.remote.response.ChatResponse
 import com.reza.nyamapp.data.remote.response.ProfileResponse
+import com.reza.nyamapp.data.remote.response.RecognizeResponse
+import com.reza.nyamapp.data.remote.response.ResultsItem
 import com.reza.nyamapp.data.remote.response.SyncProfileResponse
 import com.reza.nyamapp.data.remote.retrofit.ApiService
 import com.reza.nyamapp.data.remote.retrofit.Photo
 import com.reza.nyamapp.data.remote.retrofit.ProfileUser
 import com.reza.nyamapp.data.remote.retrofit.chat.PostChat
+import okhttp3.MultipartBody
 
 class RemoteRepository private constructor(private val apiService: ApiService) {
     suspend fun postQuestion(
@@ -89,6 +92,24 @@ class RemoteRepository private constructor(private val apiService: ApiService) {
                 Log.d(TAG, "putPhoto: ${e.message.toString()}")
             }
         }
+
+    fun recognizeFood(
+        token: String,
+        file: MultipartBody.Part
+    ): LiveData<Result<List<ResultsItem?>?>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val authHeader = "Bearer $token"
+                val response = apiService.postRecognize(authHeader, file)
+                emit(Result.Success(response.results))
+                Log.d(TAG, "postRecognize: $response")
+            } catch (e: Exception) {
+                emit(Result.Error(e.message.toString()))
+                Log.d(TAG, "postRecognize: ${e.message.toString()}")
+            }
+        }
+
 
     companion object {
         const val TAG = "Remote Repository"

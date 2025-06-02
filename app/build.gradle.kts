@@ -80,4 +80,6 @@ dependencies {
 
     implementation (libs.glide.v4120)
     annotationProcessor (libs.compiler)
+
+    implementation(libs.ucrop)
 }
