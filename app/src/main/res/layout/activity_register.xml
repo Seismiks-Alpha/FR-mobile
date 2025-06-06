@@ -60,13 +60,14 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    app:errorEnabled="true"
                     android:hint="@string/hint_email"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:startIconDrawable="@drawable/ic_email">
 
-                    <com.reza.nyamapp.ui.customEditText.MyEmailEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ed_email"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -86,13 +87,14 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:hint="@string/hint_password"
+                    app:errorEnabled="true"
                     app:endIconMode="password_toggle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_email"
                     app:startIconDrawable="@drawable/ic_key">
 
-                    <com.reza.nyamapp.ui.customEditText.MyPasswordEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ed_password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -112,6 +114,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:hint="@string/hint_confirm_password"
+                    app:errorEnabled="true"
                     app:endIconMode="password_toggle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -134,7 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:backgroundTint="@color/yellow"
                     android:text="@string/register"
@@ -196,16 +199,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_login_register" />
 
-                <ProgressBar
+                <com.google.android.material.progressindicator.CircularProgressIndicator
                     android:id="@+id/progress_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:progressTint="@color/black"
-                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

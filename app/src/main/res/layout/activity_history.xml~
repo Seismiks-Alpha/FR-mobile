@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/vg_historyActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,14 +15,16 @@
         android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_HistoryActivity"
+            android:id="@+id/my_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue">
+            android:background="@color/black">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_HistoryActivity"
+                android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
+                app:titleTextColor="@color/white"
+                app:subtitleTextColor="@color/white"
                 android:layout_height="?attr/actionBarSize" />
 
         </com.google.android.material.appbar.AppBarLayout>

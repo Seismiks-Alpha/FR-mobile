@@ -2,6 +2,8 @@ package com.reza.nyamapp.ui.autherization
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -31,12 +33,15 @@ import com.reza.nyamapp.databinding.ActivityRegisterBinding
 import com.reza.nyamapp.ui.heightWeight.HeightWeightSettingActivity
 import com.reza.nyamapp.utils.AppPreferences.saveUserIdToPreferences
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
-
     private lateinit var profileViewModel: ProfileViewModel
+    private val regexEmail = "^[A-Za-z0-9+_.-]+@(.+)\$".toRegex()
+    private val specialCharPattern = Pattern.compile("[^a-zA-Z0-9]")
+    private val uppercaseCharPattern = Pattern.compile("[A-Z]")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +54,12 @@ class RegisterActivity : AppCompatActivity() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         profileViewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
 
+        setupRealtimeValidation()
+
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.btnGoogle.setOnClickListener {
@@ -104,7 +112,10 @@ class RegisterActivity : AppCompatActivity() {
                                     override fun onChanged(result: Result<SyncProfileResponse>) {
                                         when (result) {
                                             is Result.Loading -> {
-                                                Log.d("RegisterActivity", "Profile Sync: Loading...")
+                                                Log.d(
+                                                    "RegisterActivity",
+                                                    "Profile Sync: Loading..."
+                                                )
                                             }
 
                                             is Result.Success -> {
@@ -144,6 +155,76 @@ class RegisterActivity : AppCompatActivity() {
                     showLoading(false)
                 }
             }
+    }
+
+    private fun setupRealtimeValidation() {
+        binding.edEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                validateEmail(s.toString())
+            }
+        })
+
+        binding.edPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                validatePassword(s.toString())
+            }
+        })
+
+        binding.edConfirmPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                validateConfirmPassword(s.toString())
+            }
+        })
+    }
+
+    private fun validateEmail(email: String): Boolean {
+        return if (email.isNotEmpty() && !regexEmail.matches(email)) {
+            binding.tilEmail.error = "Email tidak valid"
+            false
+        } else {
+            binding.tilEmail.error = null
+            true
+        }
+    }
+
+    private fun validatePassword(password: String): Boolean {
+        when {
+            password.isNotEmpty() && password.length < 8 -> {
+                binding.tilPassword.error = getString(R.string.password_minimal_8_karakter)
+                return false
+            }
+
+            password.isNotEmpty() && !specialCharPattern.matcher(password).find() -> {
+                binding.tilPassword.error = "Password harus memiliki minimal satu karakter spesial."
+                return false
+            }
+
+            password.isNotEmpty() && !uppercaseCharPattern.matcher(password).find() -> {
+                binding.tilPassword.error = "Password harus memiliki minimal satu huruf kapital."
+                return false
+            }
+
+            else -> {
+                binding.tilPassword.error = null
+                return true
+            }
+        }
+    }
+
+    private fun validateConfirmPassword(password: String): Boolean {
+        return if (password.isNotEmpty() && password != binding.edPassword.text.toString()) {
+            binding.tilConfirmPassword.error = "Password tidak cocok"
+            false
+        } else {
+            binding.tilConfirmPassword.error = null
+            true
+        }
     }
 
     private fun signIn() {

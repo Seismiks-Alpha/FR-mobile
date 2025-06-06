@@ -39,7 +39,7 @@ class ChatActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        progressBar = findViewById(R.id.progressBar)
+        progressBar = findViewById(R.id.progress_bar)
 
         rvChat = binding.rvChatList
         rvChat.layoutManager = LinearLayoutManager(this)
