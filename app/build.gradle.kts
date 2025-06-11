@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.reza.nyamapp"
+    namespace = "com.seismiks.nyamapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.reza.nyamapplication"
+        applicationId = "com.seismiks.nyamapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

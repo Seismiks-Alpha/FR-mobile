@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.3"
+agp = "8.10.1"
 coilCompose = "2.4.0"
 converterGson = "2.9.0"
 glide = "4.15.1"
@@ -17,6 +17,7 @@ constraintlayout = "2.2.0"
 lifecycleLivedataKtx = "2.4.0"
 lifecycleViewmodelKtx = "2.4.0"
 mpandroidchart = "v3.1.0"
+navigationFragmentKtx = "2.9.0"
 preferenceKtx = "1.2.1"
 retrofit = "2.9.0"
 roomCompiler = "2.5.2"
@@ -35,6 +36,8 @@ playServicesAuth = "21.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glideVersion" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
