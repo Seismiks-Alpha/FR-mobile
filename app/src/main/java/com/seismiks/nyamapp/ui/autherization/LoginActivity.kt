@@ -30,7 +30,7 @@ import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.remote.response.SyncProfileResponse
 import com.seismiks.nyamapp.databinding.ActivityLoginBinding
-import com.seismiks.nyamapp.ui.home.HomeActivity
+import com.seismiks.nyamapp.ui.ContainerActivity
 import com.seismiks.nyamapp.utils.AppPreferences.saveUserIdToPreferences
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
@@ -338,7 +338,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, ContainerActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(
                 intent,

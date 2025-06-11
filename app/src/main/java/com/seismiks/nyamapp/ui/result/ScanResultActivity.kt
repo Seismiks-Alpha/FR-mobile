@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.local.ScanResult
 import com.seismiks.nyamapp.databinding.ActivityScanResultBinding
+import com.seismiks.nyamapp.ui.ContainerActivity
 import com.seismiks.nyamapp.ui.camera.CameraActivity
-import com.seismiks.nyamapp.ui.home.HomeActivity
 import com.seismiks.nyamapp.utils.CALORIES
 import java.io.File
 import java.io.FileOutputStream
@@ -58,10 +58,11 @@ class ScanResultActivity : AppCompatActivity() {
             viewModel.loadCaloriesToday(System.currentTimeMillis().toString())
 
             viewModel.totalCalories.observe(this) { totalKalori ->
-                val intent = Intent(this, HomeActivity::class.java)
+                val intent = Intent(this, ContainerActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.putExtra(CALORIES, totalKalori.toString())
                 startActivity(intent)
+                finish()
             }
 
             viewModel.saved.observe(this) { event ->

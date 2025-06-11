@@ -47,7 +47,7 @@ class HistoryDetailActivity : AppCompatActivity() {
         tvKarbohidrat = binding.tvCarbo
         tvProtein = binding.tvProtein
         tvIron = binding.tvIron
-        tvCalcium = binding.tvCalcium
+        tvCalcium = binding.tvCalsium
 
         val id = intent.getIntExtra(RESULT_ID, 0)
 

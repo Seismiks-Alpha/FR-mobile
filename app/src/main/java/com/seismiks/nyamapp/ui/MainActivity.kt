@@ -11,7 +11,6 @@ import com.google.firebase.auth.auth
 import com.seismiks.nyamapp.databinding.ActivityMainBinding
 import com.seismiks.nyamapp.ui.autherization.LoginActivity
 import com.seismiks.nyamapp.ui.autherization.RegisterActivity
-import com.seismiks.nyamapp.ui.home.HomeActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

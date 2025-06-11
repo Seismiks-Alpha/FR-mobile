@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".ui.heightWeight.HeightWeightSettingActivity">
+    android:background="@color/green_yellow"
+    tools:context=".ui.heightWeight.HeightWeightRegisterActivity">
 
     <TextView
         android:id="@+id/tv_height_title"
@@ -160,7 +160,7 @@
             android:ems="10"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
@@ -169,9 +169,24 @@
         android:fontFamily="@font/jockey_one_font"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
         android:backgroundTint="@color/cream"
         app:layout_constraintTop_toBottomOf="@id/til_age"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_cancel" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Batal"
+        android:fontFamily="@font/jockey_one_font"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:layout_marginHorizontal="16dp"
+        android:backgroundTint="@color/red"
+        app:layout_constraintTop_toBottomOf="@id/btn_save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
@@ -186,4 +201,5 @@
         android:visibility="gone"
         android:indeterminate="true"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

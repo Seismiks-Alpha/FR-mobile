@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/green_yellow"
     tools:context=".ui.setting.UserSettingActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,26 +16,32 @@
             android:id="@+id/my_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:background="@color/cream"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:title="@string/user"
                 app:titleTextColor="@color/white"
-                app:subtitleTextColor="@color/white"
-                android:layout_height="?attr/actionBarSize" />
+                app:navigationIconTint="@color/white"
+                app:navigationIcon="@drawable/ic_back"
+                app:subtitleTextColor="@color/white" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_user_profile"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_margin="16dp"
-            android:background="@color/white"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            android:background="@color/cream"
             app:layout_constraintBottom_toTopOf="@id/tv_username_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

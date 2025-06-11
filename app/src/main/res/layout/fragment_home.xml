@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     android:paddingBottom="16dp"
-    android:background="@color/background"
+    android:background="@color/green_yellow"
     tools:context=".ui.home.HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:id="@+id/card_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/yellow"
+            android:backgroundTint="@color/cream"
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="Guest"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/white"
                     android:fontFamily="@font/jockey_one_font"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -73,6 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     app:cardCornerRadius="16dp"
+                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider">
@@ -80,6 +81,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:padding="8dp">
 
                         <TextView
@@ -88,6 +90,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/jockey_one_font"
                             android:text="Berat badan"
+                            android:textColor="@color/black"
                             app:layout_constraintEnd_toStartOf="@id/tv_height"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -109,6 +112,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/jockey_one_font"
                             android:text="Tinggi badan"
+                            android:textColor="@color/black"
                             app:layout_constraintEnd_toStartOf="@id/btn_change_fit"
                             app:layout_constraintStart_toEndOf="@id/tv_weigth"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -128,8 +132,9 @@
                             android:id="@+id/btn_change_fit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/cream"
+                            android:backgroundTint="@color/blue"
                             android:text="Ubah"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/jockey_one_font"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -203,8 +208,8 @@
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -256,20 +261,23 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card_scan"
             style="@style/Widget.Material3.CardView.Elevated"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="12dp"
             android:backgroundTint="@color/yellow"
             app:cardCornerRadius="10dp"
-            app:cardElevation="20dp"
+            android:transitionName="shared_element_container"
+
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/card_history"
             app:layout_constraintTop_toBottomOf="@id/linear_info">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
+                android:padding="8dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -287,7 +295,7 @@
                     android:text="@string/scan_camera"
                     android:textAlignment="center"
                     android:textColor="@color/background"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -333,18 +341,20 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_history"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/cream"
             android:layout_marginHorizontal="12dp"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/card_scan"
             app:layout_constraintTop_toTopOf="@id/card_scan">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
+                android:padding="8dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -362,7 +372,7 @@
                     android:text="@string/scan_history"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

@@ -11,8 +11,8 @@
     <string name="scan_camera">Pindai Makanan</string>
     <string name="scan_text">Riwayat Pemindaian</string>
     <string name="setting_text">Pengaturan</string>
-    <string name="scan_history">Riwayat Pemindaian</string>
-    <string name="chatbot_text">Chatbot</string>
+    <string name="scan_history">Riwayat</string>
+    <string name="chatbot_text">Nyambot</string>
     <string name="home_desc">beranda</string>
     <string name="empty_history_error">Belum ada riwayat</string>
     <string name="example">Example</string>
@@ -22,7 +22,7 @@
     <string name="today_callorie">Kalori hari ini: </string>
     <string name="current">sekarang</string>
     <string name="max_callorie">kalori maksimal</string>
-    <string name="food_name">Nama Makanan</string>
+    <string name="food_name">Ayam Goreng</string>
     <string name="kalori">Kalori</string>
     <string name="lemak">Lemak</string>
     <string name="_100">100</string>

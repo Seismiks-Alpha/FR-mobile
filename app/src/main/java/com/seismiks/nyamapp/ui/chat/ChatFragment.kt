@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.seismiks.nyamapp.R
 import com.seismiks.nyamapp.ViewModelFactory
@@ -27,6 +30,7 @@ class ChatFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var chatViewModel: ChatViewModel
     private var progressBar: ProgressBar? = null
+    private var topAppBar: MaterialToolbar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +54,27 @@ class ChatFragment : Fragment() {
         //(requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         progressBar = binding.progressBar
+
+        topAppBar = binding.myToolbar
+
+        topAppBar?.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.help -> {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Nyambot")
+                        .setMessage("Nyambot adalah asisten chatbot yang dapat membantu menjawab pertanyaan anda seputar makanan.")
+                        .setPositiveButton("Oke") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                    true
+                }
+
+                else -> {
+                    false
+                }
+            }
+        }
 
         rvChat = binding.rvChatList
         rvChat.layoutManager = LinearLayoutManager(requireContext())

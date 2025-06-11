@@ -52,40 +52,10 @@ class SettingFragment : Fragment() {
 
         auth = Firebase.auth
 
+        setupObserver()
+        fetchData()
+
         // Load profile info
-        auth.currentUser?.getIdToken(true)?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val idToken = task.result?.token
-                if (idToken != null) {
-                    lifecycleScope.launch {
-                        viewModel.getProfileInfo(idToken).observe(viewLifecycleOwner) { result ->
-                            when (result) {
-                                is Result.Loading -> {
-                                    Log.d("SettingFragment", "Loading...")
-                                }
-                                is Result.Success -> {
-                                    Log.d("SettingFragment", "Success: ${result.data}")
-                                    binding.tvUserEmail.text = result.data.email
-                                    binding.tvUserName.text = result.data.displayName
-                                    val imageUrl = result.data.photoUrl
-                                    Glide.with(requireContext())
-                                        .load(imageUrl)
-                                        .apply(
-                                            RequestOptions()
-                                                .placeholder(R.drawable.user)
-                                                .error(R.drawable.user)
-                                        )
-                                        .into(binding.ivUserProfile)
-                                }
-                                is Result.Error -> {
-                                    Log.e("SettingFragment", "Error: Gagal mengambil data profil")
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         binding.layoutUser.setOnClickListener {
             val intent = Intent(requireActivity(), UserSettingActivity::class.java)
@@ -105,6 +75,45 @@ class SettingFragment : Fragment() {
 
         // Set initial email
         binding.tvUserEmail.text = auth.currentUser?.email
+    }
+
+    private fun setupObserver() {
+        viewModel.profile.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    showLoading(true)
+                }
+
+                is Result.Success -> {
+                    showLoading(false)
+                    binding.tvUserName.text = result.data.displayName
+                    binding.tvUserEmail.text = result.data.email
+                    Glide.with(requireActivity())
+                        .load(result.data.photoUrl)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(binding.ivUserProfile)
+                }
+
+                is Result.Error -> {
+                    showLoading(false)
+                    binding.tvUserName.text = "Error"
+                    binding.tvUserEmail.text = "Error"
+                }
+            }
+        }
+    }
+
+    private fun fetchData() {
+        auth.currentUser?.getIdToken(true)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val idToken = task.result?.token
+                if (idToken != null) {
+                    viewModel.getProfileInfo(idToken)
+                } else {
+                    Log.e("SettingFragment", "ID Token is null")
+                }
+            }
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -15,12 +15,12 @@ import com.seismiks.nyamapp.R
 import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.remote.retrofit.ProfileUser
-import com.seismiks.nyamapp.databinding.ActivityHeightWeightSettingsBinding
+import com.seismiks.nyamapp.databinding.ActivityHeightWeightRegisterBinding
 import com.seismiks.nyamapp.ui.ContainerActivity
 import kotlinx.coroutines.launch
 
-class HeightWeightSettingActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHeightWeightSettingsBinding
+class HeightWeightRegisterActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHeightWeightRegisterBinding
     private lateinit var viewModel: HeightWeightViewModel
     private lateinit var gender: String
     private lateinit var auth: FirebaseAuth
@@ -32,7 +32,7 @@ class HeightWeightSettingActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        binding = ActivityHeightWeightSettingsBinding.inflate(layoutInflater)
+        binding = ActivityHeightWeightRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
@@ -135,10 +135,6 @@ class HeightWeightSettingActivity : AppCompatActivity() {
                 Log.e("HeightWeightSettingActivity", "Current user is null")
             }
         }
-
-        binding.btnCancel.setOnClickListener {
-            finish()
-        }
     }
 
     private fun putProfile(token: String) {
@@ -159,6 +155,9 @@ class HeightWeightSettingActivity : AppCompatActivity() {
                     binding.btnSave.isEnabled = true
                     Toast.makeText(this, "Profil berhasil disimpan!", Toast.LENGTH_SHORT).show()
                     Log.d("HeightWeightSettingActivity", "putProfile successful: ${result.data}")
+                    val intent =
+                        Intent(this, ContainerActivity::class.java)
+                    startActivity(intent)
                     finish()
                 }
 

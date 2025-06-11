@@ -73,7 +73,7 @@ class HistoryActivity : AppCompatActivity() {
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder
         ): Int {
-            return makeMovementFlags(0, ItemTouchHelper.RIGHT)
+            return makeMovementFlags(0, ItemTouchHelper.LEFT)
         }
 
         override fun onMove(

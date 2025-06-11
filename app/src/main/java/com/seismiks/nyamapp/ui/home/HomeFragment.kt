@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.MPPointF
+import com.google.android.material.transition.MaterialContainerTransform
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -28,7 +29,6 @@ import com.seismiks.nyamapp.ui.camera.CameraActivity
 import com.seismiks.nyamapp.ui.chat.ChatActivity
 import com.seismiks.nyamapp.ui.heightWeight.HeightWeightSettingActivity
 import com.seismiks.nyamapp.ui.history.HistoryActivity
-import com.seismiks.nyamapp.ui.setting.SettingActivity
 import com.seismiks.nyamapp.data.Result
 import java.util.Calendar
 
@@ -50,6 +50,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform()
 
         auth = Firebase.auth
 
@@ -91,27 +92,68 @@ class HomeFragment : Fragment() {
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
-        // Load profile info
+        setupObserver()
+
+        fetchData()
+
+        // Card click listeners
+        /* binding.cardSetting.setOnClickListener {
+            val intent = Intent(requireActivity(), SettingActivity::class.java)
+            startActivity(intent)
+        } */
+
+        binding.cardScan.setOnClickListener {
+            val intent = Intent(requireActivity(), CameraActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardHistory.setOnClickListener {
+            val intent = Intent(requireActivity(), HistoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        /* binding.cardChat.setOnClickListener {
+            val intent = Intent(requireActivity(), ChatActivity::class.java)
+            startActivity(intent)
+        } */
+    }
+
+    private fun getMillisFromDate(dateInMillis: Long): Long {
+        return Calendar.getInstance().apply {
+            timeInMillis = dateInMillis
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+    }
+
+    private fun setupObserver() {
+        viewModel.profile.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    // Handle loading state
+                }
+                is Result.Success -> {
+                    binding.tvUserName.text = result.data.displayName
+                    binding.tvHeightValue.text = result.data.profile?.height.toString()
+                    binding.tvWeightValue.text = result.data.profile?.weight.toString()
+                }
+                is Result.Error -> {
+                    binding.tvUserName.text = "Error"
+                    binding.tvHeightValue.text = "Error"
+                    binding.tvWeightValue.text = "Error"
+                }
+            }
+        }
+    }
+
+    private fun fetchData() {
         auth.currentUser?.getIdToken(true)?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val idToken = task.result.token
                 if (idToken != null) {
-                    viewModel.getProfileInfo(idToken).observe(viewLifecycleOwner) { result ->
-                        when (result) {
-                            is Result.Loading -> {
-                                Log.d("HomeFragment", "Loading...")
-                            }
-                            is Result.Success -> {
-                                Log.d("HomeFragment", "Success: ${result.data}")
-                                binding.tvUserName.text = result.data.displayName
-                                binding.tvHeightValue.text = result.data.profile?.height.toString()
-                                binding.tvWeightValue.text = result.data.profile?.weight.toString()
-                            }
-                            is Result.Error -> {
-                                Log.e("HomeFragment", "Error: Gagal mengambil data profil")
-                            }
-                        }
-                    }
+                    viewModel.getProfileInfo(idToken)
                 } else {
                     Log.e("HomeFragment", "ID Token is null")
                 }
@@ -164,37 +206,6 @@ class HomeFragment : Fragment() {
                     setCenterTextColor(Color.RED)
                 }
             }
-
-        // Card click listeners
-        /* binding.cardSetting.setOnClickListener {
-            val intent = Intent(requireActivity(), SettingActivity::class.java)
-            startActivity(intent)
-        } */
-
-        binding.cardScan.setOnClickListener {
-            val intent = Intent(requireActivity(), CameraActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.cardHistory.setOnClickListener {
-            val intent = Intent(requireActivity(), HistoryActivity::class.java)
-            startActivity(intent)
-        }
-
-        /* binding.cardChat.setOnClickListener {
-            val intent = Intent(requireActivity(), ChatActivity::class.java)
-            startActivity(intent)
-        } */
-    }
-
-    private fun getMillisFromDate(dateInMillis: Long): Long {
-        return Calendar.getInstance().apply {
-            timeInMillis = dateInMillis
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.timeInMillis
     }
 
     override fun onDestroyView() {

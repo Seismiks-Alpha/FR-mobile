@@ -8,8 +8,8 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.reza.nyamapplication" />
-                  <option name="mobileSdkAppId" value="1:562855494147:android:75704a995a2ecaa3ed4436" />
+                  <option name="appId" value="com.seismiks.nyamapp" />
+                  <option name="mobileSdkAppId" value="1:562855494147:android:5d9fd8cbadf924b2ed4436" />
                   <option name="projectId" value="seismiks-nyam" />
                   <option name="projectNumber" value="562855494147" />
                 </ConnectionSetting>

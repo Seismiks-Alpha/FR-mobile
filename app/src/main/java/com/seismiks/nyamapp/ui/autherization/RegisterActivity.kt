@@ -30,6 +30,7 @@ import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.remote.response.SyncProfileResponse
 import com.seismiks.nyamapp.databinding.ActivityRegisterBinding
+import com.seismiks.nyamapp.ui.heightWeight.HeightWeightRegisterActivity
 import com.seismiks.nyamapp.ui.heightWeight.HeightWeightSettingActivity
 import com.seismiks.nyamapp.utils.AppPreferences.saveUserIdToPreferences
 import kotlinx.coroutines.launch
@@ -70,22 +71,31 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.edEmail.text.toString()
             val password = binding.edPassword.text.toString()
             val confirmPassword = binding.edConfirmPassword.text.toString()
-            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(
-                    this,
-                    "Tolong lengkapi email, password, dan konfirmasi password",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+            val isEmailValid = validateEmail(email)
+            val isPasswordValid = validatePassword(password)
+            val isConfirmPasswordValid = validateConfirmPassword(confirmPassword)
+
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Tolong lengkapi email dan password", Toast.LENGTH_SHORT)
+                    .show()
+
+                if (email.isEmpty()) binding.tilEmail.error = "Email tidak boleh kosong"
+                if (password.isEmpty()) binding.tilPassword.error = "Password tidak boleh kosong"
+                if (confirmPassword.isEmpty()) binding.tilConfirmPassword.error =
+                    "Konfirmasi password tidak boleh kosong"
                 return@setOnClickListener
-            } else if (password != confirmPassword) {
-                Toast.makeText(
-                    this,
-                    "Password dan konfirmasi password tidak cocok",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            } else {
+            }
+
+            if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
                 register(email, password)
+            } else {
+                if (!isEmailValid && email.isNotEmpty()) binding.tilEmail.error =
+                    "Email tidak valid"
+                if (!isPasswordValid && password.isNotEmpty()) validatePassword(password)
+                if (!isConfirmPasswordValid && confirmPassword.isNotEmpty()) validateConfirmPassword(
+                    confirmPassword
+                )
             }
         }
     }
@@ -353,7 +363,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            val intent = Intent(this, HeightWeightSettingActivity::class.java)
+            val intent = Intent(this, HeightWeightRegisterActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(
                 intent,

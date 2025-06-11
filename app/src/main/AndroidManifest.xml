@@ -18,6 +18,9 @@
         android:theme="@style/Base.Theme.NyamApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.heightWeight.HeightWeightRegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ContainerActivity"
             android:exported="false" />
         <activity

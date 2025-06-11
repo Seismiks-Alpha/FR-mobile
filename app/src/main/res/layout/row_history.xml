@@ -16,14 +16,16 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_food"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/intro"
+            android:src="@drawable/home"
+            android:scaleType="centerCrop"
+            android:layout_margin="8dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_history_title"
@@ -43,6 +45,7 @@
             android:layout_height="3dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            app:dividerColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/tv_history_title"
             app:layout_constraintStart_toEndOf="@id/iv_food" />
 

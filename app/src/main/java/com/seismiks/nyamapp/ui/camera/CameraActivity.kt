@@ -10,6 +10,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.transition.MaterialContainerTransform
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -63,10 +64,16 @@ class CameraActivity : AppCompatActivity() {
 
         binding.btnCamera.setOnClickListener { startCamera() }
         binding.btnUpload.setOnClickListener {
-            val intent = Intent(this, ScanResultActivity::class.java)
-            intent.putExtra(ScanResultActivity.EXTRA_IMAGE_URI, currentImageUri.toString())
-            startActivity(intent)
-            finish()
+            if (currentImageUri != null) {
+                val intent = Intent(this, ScanResultActivity::class.java).apply {
+                    putExtra(ScanResultActivity.EXTRA_IMAGE_URI, currentImageUri.toString())
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    startActivity(this)
+                    finish()
+                }
+            } else {
+                Toast.makeText(this, "Tidak ada gambar yang bisa diproses", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.btnGallery.setOnClickListener { startGallery() }
 

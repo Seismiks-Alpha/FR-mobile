@@ -23,6 +23,8 @@ class HomeViewModel(
         return repository.getCaloriesToday(date)
     }
 
-    fun getProfileInfo(tokenId: String) =
-        remoteRepository.getProfile(tokenId)
+    fun getProfileInfo(tokenId: String) {
+        _profileResult.value = Result.Loading
+        remoteRepository.getProfile(tokenId).observeForever { result -> _profileResult.value = result }
+    }
 }
