@@ -166,10 +166,10 @@ class HomeFragment : Fragment() {
             }
 
         // Card click listeners
-        binding.cardSetting.setOnClickListener {
+        /* binding.cardSetting.setOnClickListener {
             val intent = Intent(requireActivity(), SettingActivity::class.java)
             startActivity(intent)
-        }
+        } */
 
         binding.cardScan.setOnClickListener {
             val intent = Intent(requireActivity(), CameraActivity::class.java)
@@ -181,10 +181,10 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.cardChat.setOnClickListener {
+        /* binding.cardChat.setOnClickListener {
             val intent = Intent(requireActivity(), ChatActivity::class.java)
             startActivity(intent)
-        }
+        } */
     }
 
     private fun getMillisFromDate(dateInMillis: Long): Long {

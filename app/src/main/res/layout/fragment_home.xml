@@ -259,10 +259,10 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="12dp"
             android:backgroundTint="@color/yellow"
             app:cardCornerRadius="10dp"
             app:cardElevation="20dp"
-            app:layout_constraintEnd_toStartOf="@id/card_chat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linear_info">
 
@@ -293,7 +293,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
+        <!-- <androidx.cardview.widget.CardView
             android:id="@+id/card_chat"
             android:layout_width="170dp"
             android:layout_height="170dp"
@@ -329,19 +329,17 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView> -->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_history"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:layout_marginTop="16dp"
             android:backgroundTint="@color/cream"
-
+            android:layout_marginHorizontal="12dp"
             app:cardCornerRadius="10dp"
-            app:layout_constraintEnd_toStartOf="@id/card_setting"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_scan">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/card_scan">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -370,7 +368,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
+        <!-- <androidx.cardview.widget.CardView
             android:id="@+id/card_setting"
             android:layout_width="170dp"
             android:layout_height="170dp"
@@ -407,7 +405,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView> -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
