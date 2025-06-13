@@ -43,7 +43,7 @@ class HeightWeightRegisterActivity : AppCompatActivity() {
             binding.ivMale.setImageResource(R.drawable.iv_male_active)
             binding.ivFemale.setImageResource(R.drawable.iv_female_inactive)
             binding.ivMale.setBackgroundColor(getColor(R.color.white))
-            binding.ivFemale.setBackgroundColor(getColor(R.color.background))
+            binding.ivFemale.setBackgroundColor(getColor(R.color.green_yellow))
         }
 
         binding.ivFemale.setOnClickListener {
@@ -51,7 +51,7 @@ class HeightWeightRegisterActivity : AppCompatActivity() {
             binding.ivMale.setImageResource(R.drawable.iv_male_inactive)
             binding.ivFemale.setImageResource(R.drawable.iv_female_active)
             binding.ivFemale.setBackgroundColor(getColor(R.color.white))
-            binding.ivMale.setBackgroundColor(getColor(R.color.background))
+            binding.ivMale.setBackgroundColor(getColor(R.color.green_yellow))
         }
 
         auth.currentUser?.getIdToken(true)?.addOnCompleteListener {

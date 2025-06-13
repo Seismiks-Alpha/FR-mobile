@@ -3,17 +3,18 @@ package com.seismiks.nyamapp.ui.chat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.MenuRes
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +32,7 @@ class ChatFragment : Fragment() {
     private lateinit var chatViewModel: ChatViewModel
     private var progressBar: ProgressBar? = null
     private var topAppBar: MaterialToolbar? = null
+    private var model = "gemini"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +69,11 @@ class ChatFragment : Fragment() {
                             dialog.dismiss()
                         }
                         .show()
+                    true
+                }
+                R.id.picker -> {
+                    val anchorView = requireActivity().findViewById<View>(R.id.picker)
+                    showPickerMenu(anchorView, R.menu.chatbot_models)
                     true
                 }
 
@@ -118,8 +125,11 @@ class ChatFragment : Fragment() {
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 val idToken = task.result.token
-                                if (idToken != null) {
-                                    chatViewModel.sendMessage(idToken, userId, messageText)
+                                if (idToken != null && model == "gemini") {
+                                    chatViewModel.sendMessageGemini(idToken, userId, messageText)
+                                    binding.messageEditText.text.clear()
+                                } else if (idToken != null && model == "local") {
+                                    chatViewModel.sendMessageLocal(idToken, userId, messageText)
                                     binding.messageEditText.text.clear()
                                 } else {
                                     Toast.makeText(
@@ -142,6 +152,31 @@ class ChatFragment : Fragment() {
             }
         }
     }
+
+    private fun showPickerMenu(v: View, @MenuRes menuRes: Int) {
+        val popup = PopupMenu(requireContext(), v)
+        popup.menuInflater.inflate(menuRes, popup.menu)
+
+        // Tambahkan listener untuk menangani klik pada item di dalam popup menu
+        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            when (menuItem.itemId) {
+                R.id.gemini -> {
+                    model = "gemini"
+                    Toast.makeText(context, "Pilih Model Gemini", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.local -> {
+                    model = "local"
+                    Toast.makeText(context, "Pilih Model Local", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
+        // Tampilkan popup menu
+        popup.show()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.seismiks.nyamapp.R
 import com.seismiks.nyamapp.data.local.Chat
 import com.seismiks.nyamapp.databinding.RowMessageBinding
+import com.seismiks.nyamapp.utils.formatTextWithBold
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -32,7 +33,8 @@ class ChatAdapter(private val currentUserName: String?) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(chat: Chat) {
-            binding.tvMessage.text = chat.message
+            val formattedText = formatTextWithBold(chat.message)
+            binding.tvMessage.text = formattedText
             binding.tvTime.text = chat.timestamp.convertLongToTime()
             binding.tvUser.text = chat.sender
             setChatBubble(chat.sender, binding.cardView)

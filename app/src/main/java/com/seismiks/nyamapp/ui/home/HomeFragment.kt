@@ -5,11 +5,11 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -24,12 +24,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.seismiks.nyamapp.R
 import com.seismiks.nyamapp.ViewModelFactory
+import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.databinding.FragmentHomeBinding
 import com.seismiks.nyamapp.ui.camera.CameraActivity
-import com.seismiks.nyamapp.ui.chat.ChatActivity
 import com.seismiks.nyamapp.ui.heightWeight.HeightWeightSettingActivity
 import com.seismiks.nyamapp.ui.history.HistoryActivity
-import com.seismiks.nyamapp.data.Result
 import java.util.Calendar
 
 class HomeFragment : Fragment() {

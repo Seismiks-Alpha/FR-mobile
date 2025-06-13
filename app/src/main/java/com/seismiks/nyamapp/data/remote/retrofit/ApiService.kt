@@ -20,8 +20,14 @@ interface ApiService {
         @Header("Authorization") authorizationHeader: String,
     ): SyncProfileResponse
 
+    @POST("chat/gemini")
+    suspend fun postQuestionGemini(
+        @Header("Authorization") Bearer: String,
+        @Body postChat: PostChat
+    ): ChatResponse
+
     @POST("chat")
-    suspend fun postQuestion(
+    suspend fun postQuestionLocal(
         @Header("Authorization") Bearer: String,
         @Body postChat: PostChat
     ): ChatResponse

@@ -84,7 +84,7 @@ class ChatActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 val idToken = task.result.token
                                 if (idToken != null) {
-                                    chatViewModel.sendMessage(idToken, userId, messageText)
+                                    chatViewModel.sendMessageGemini(idToken, userId, messageText)
                                     binding.messageEditText.text.clear()
                                 } else {
                                     Toast.makeText(

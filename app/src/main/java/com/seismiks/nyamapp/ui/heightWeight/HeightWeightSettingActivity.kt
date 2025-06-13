@@ -1,6 +1,5 @@
 package com.seismiks.nyamapp.ui.heightWeight
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,7 +15,6 @@ import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.remote.retrofit.ProfileUser
 import com.seismiks.nyamapp.databinding.ActivityHeightWeightSettingsBinding
-import com.seismiks.nyamapp.ui.ContainerActivity
 import kotlinx.coroutines.launch
 
 class HeightWeightSettingActivity : AppCompatActivity() {
@@ -43,7 +41,7 @@ class HeightWeightSettingActivity : AppCompatActivity() {
             binding.ivMale.setImageResource(R.drawable.iv_male_active)
             binding.ivFemale.setImageResource(R.drawable.iv_female_inactive)
             binding.ivMale.setBackgroundColor(getColor(R.color.white))
-            binding.ivFemale.setBackgroundColor(getColor(R.color.background))
+            binding.ivFemale.setBackgroundColor(getColor(R.color.green_yellow))
         }
 
         binding.ivFemale.setOnClickListener {
@@ -51,7 +49,7 @@ class HeightWeightSettingActivity : AppCompatActivity() {
             binding.ivMale.setImageResource(R.drawable.iv_male_inactive)
             binding.ivFemale.setImageResource(R.drawable.iv_female_active)
             binding.ivFemale.setBackgroundColor(getColor(R.color.white))
-            binding.ivMale.setBackgroundColor(getColor(R.color.background))
+            binding.ivMale.setBackgroundColor(getColor(R.color.green_yellow))
         }
 
         auth.currentUser?.getIdToken(true)?.addOnCompleteListener {

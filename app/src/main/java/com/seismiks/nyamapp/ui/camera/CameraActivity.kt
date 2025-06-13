@@ -1,6 +1,8 @@
 package com.seismiks.nyamapp.ui.camera
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,24 +12,24 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.transition.MaterialContainerTransform
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.seismiks.nyamapp.R
 import com.seismiks.nyamapp.ViewModelFactory
+import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.databinding.ActivityCameraBinding
 import com.seismiks.nyamapp.ui.result.ScanResultActivity
 import com.seismiks.nyamapp.utils.getImageUri
 import com.seismiks.nyamapp.utils.reduceFileImage
 import com.seismiks.nyamapp.utils.uriToFile
-import com.yalantis.ucrop.UCrop
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.io.FileOutputStream
 import java.util.UUID
-import com.seismiks.nyamapp.data.Result
+import kotlin.math.min
 
 class CameraActivity : AppCompatActivity() {
 
@@ -87,13 +89,7 @@ class CameraActivity : AppCompatActivity() {
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri != null) {
-            val uniqueFileName = "cropped_image_${UUID.randomUUID()}.jpg"
-            val destinationUri = Uri.fromFile(
-                File(this.cacheDir, uniqueFileName)
-            )
-            UCrop.of(uri, destinationUri)
-                .withMaxResultSize(300, 300)
-                .start(this, UCrop.REQUEST_CROP)
+            performAutoCropAndShow(uri)
         } else {
             Log.d("Photo Picker", "No media selected")
         }
@@ -108,13 +104,9 @@ class CameraActivity : AppCompatActivity() {
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
-            val uniqueFileName = "cropped_image_${UUID.randomUUID()}.jpg"
-            val destinationUri = Uri.fromFile(
-                File(this.cacheDir, uniqueFileName)
-            )
-            UCrop.of(currentImageUri!!, destinationUri)
-                .withMaxResultSize(300, 300)
-                .start(this)
+            currentImageUri?.let { uri ->
+                performAutoCropAndShow(uri)
+            }
         } else {
             currentImageUri = null
         }
@@ -146,6 +138,43 @@ class CameraActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun performAutoCropAndShow(sourceUri: Uri) {
+        try {
+            // 1. Decode URI menjadi Bitmap
+            val inputStream = contentResolver.openInputStream(sourceUri)
+            val originalBitmap = BitmapFactory.decodeStream(inputStream)
+            inputStream?.close()
+
+            // 2. Lakukan cropping di tengah (center crop)
+            val width = originalBitmap.width
+            val height = originalBitmap.height
+            val size = min(width, height)
+            val x = if (width > size) (width - size) / 2 else 0
+            val y = if (height > size) (height - size) / 2 else 0
+            val croppedBitmap = Bitmap.createBitmap(originalBitmap, x, y, size, size)
+
+            // 3. Resize bitmap ke ukuran maksimal 300x300, sama seperti sebelumnya
+            val scaledBitmap = Bitmap.createScaledBitmap(croppedBitmap, 300, 300, true)
+
+            // 4. Buat file tujuan baru untuk menyimpan gambar yang sudah dicrop
+            val uniqueFileName = "cropped_image_${UUID.randomUUID()}.jpg"
+            val destinationFile = File(cacheDir, uniqueFileName)
+            val outputStream = FileOutputStream(destinationFile)
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+            outputStream.close()
+
+            // 5. Update URI dan tampilkan gambar
+            val newUri = Uri.fromFile(destinationFile)
+            currentImageUri = newUri // Simpan URI baru
+            viewModel.setUri(newUri) // Simpan URI ke ViewModel
+            showImage()
+
+        } catch (e: Exception) {
+            Log.e("AutoCrop", "Gagal melakukan crop otomatis", e)
+            Toast.makeText(this, "Gagal memproses gambar", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -193,26 +222,5 @@ class CameraActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
-            val resultUri = UCrop.getOutput(data!!)
-            resultUri?.let {
-                currentImageUri = it
-                viewModel.setUri(it)
-                showImage()
-            }
-        } else if (resultCode == UCrop.RESULT_ERROR) {
-            val cropError = UCrop.getError(data!!)
-            Log.e("UCrop", "Crop error: $cropError")
-            Toast.makeText(this, "Crop failed: ${cropError?.message}", Toast.LENGTH_SHORT).show()
-            currentImageUri = null
-            viewModel.setUri(null)
-
-            binding.ivPreview.visibility = View.INVISIBLE
-            binding.tvPreview.visibility = View.VISIBLE
-        }
     }
 }

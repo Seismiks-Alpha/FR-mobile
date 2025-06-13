@@ -15,7 +15,7 @@ import com.seismiks.nyamapp.data.remote.retrofit.chat.PostChat
 import okhttp3.MultipartBody
 
 class RemoteRepository private constructor(private val apiService: ApiService) {
-    suspend fun postQuestion(
+    suspend fun postQuestionGemini(
         token: String,
         userId: String,
         question: String
@@ -24,7 +24,25 @@ class RemoteRepository private constructor(private val apiService: ApiService) {
             emit(Result.Loading)
             try {
                 val userQuestion = PostChat(userId, question)
-                val response = apiService.postQuestion("Bearer $token", userQuestion)
+                val response = apiService.postQuestionGemini("Bearer $token", userQuestion)
+                emit(Result.Success(response))
+                Log.d(TAG, "postQuestion: $response")
+            } catch (e: Exception) {
+                emit(Result.Error(e.message.toString()))
+                Log.d(TAG, "postQuestion: ${e.message.toString()}")
+            }
+        }
+
+    suspend fun postQuestionLocal(
+        token: String,
+        userId: String,
+        question: String
+    ): LiveData<Result<ChatResponse>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val userQuestion = PostChat(userId, question)
+                val response = apiService.postQuestionLocal("Bearer $token", userQuestion)
                 emit(Result.Success(response))
                 Log.d(TAG, "postQuestion: $response")
             } catch (e: Exception) {

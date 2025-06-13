@@ -31,6 +31,7 @@ import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.remote.response.SyncProfileResponse
 import com.seismiks.nyamapp.databinding.ActivityRegisterBinding
 import com.seismiks.nyamapp.ui.heightWeight.HeightWeightRegisterActivity
+import com.seismiks.nyamapp.ui.heightWeight.HeightWeightSettingActivity
 import com.seismiks.nyamapp.utils.AppPreferences.saveUserIdToPreferences
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern

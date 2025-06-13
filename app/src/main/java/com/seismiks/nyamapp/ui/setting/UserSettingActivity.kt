@@ -13,7 +13,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.seismiks.nyamapp.R
 import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.databinding.ActivityUserSettingBinding
