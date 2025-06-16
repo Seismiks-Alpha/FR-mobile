@@ -256,7 +256,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_iron"
+                android:id="@+id/card_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -271,12 +271,12 @@
                     android:padding="4dp">
 
                     <TextView
-                        android:id="@+id/tv_iron_title"
+                        android:id="@+id/tv_weigth_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/iron"
+                        android:text="@string/weigth"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -284,50 +284,7 @@
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_iron"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="50dp"
-                        android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/_100"
-                        android:textAlignment="center"
-                        android:textColor="@color/background"
-                        android:textSize="16sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_calsium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="24dp"
-                android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/card_iron">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/yellow"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/tv_calsium_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
-                        android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/calsium"
-                        android:textAlignment="center"
-                        android:textColor="@color/background"
-                        android:textSize="16sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_calsium"
+                        android:id="@+id/tv_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
@@ -350,8 +307,8 @@
                 android:textColor="@color/background"
                 android:fontFamily="@font/jockey_one_font"
                 android:text="dd/mm/yyyy"
-                app:layout_constraintTop_toBottomOf="@id/card_calsium"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_weight"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
 

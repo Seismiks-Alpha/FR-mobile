@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="267 g"
+                        android:text="@string/grams"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -138,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="17 g"
+                        android:text="@string/grams"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -181,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="9 g"
+                        android:text="@string/grams"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -224,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="22 g"
+                        android:text="@string/grams"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -234,7 +234,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_iron"
+                android:id="@+id/card_grams"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -249,12 +249,12 @@
                     android:padding="4dp">
 
                     <TextView
-                        android:id="@+id/tv_iron_title"
+                        android:id="@+id/tv_weigth_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/iron"
+                        android:text="@string/weigth"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -262,55 +262,12 @@
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_iron"
+                        android:id="@+id/tv_weigth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="10 g"
-                        android:textAlignment="center"
-                        android:textColor="@color/background"
-                        android:textSize="16sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_calsium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="24dp"
-                android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/card_iron">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/yellow"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/tv_calsium_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
-                        android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/calsium"
-                        android:textAlignment="center"
-                        android:textColor="@color/background"
-                        android:textSize="16sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_calsium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="50dp"
-                        android:fontFamily="@font/jockey_one_font"
-                        android:text="8 g"
+                        android:text="@string/grams"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"

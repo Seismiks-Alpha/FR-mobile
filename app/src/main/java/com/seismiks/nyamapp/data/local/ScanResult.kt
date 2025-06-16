@@ -14,27 +14,24 @@ data class ScanResult(
     val image: String,
 
     @ColumnInfo(name = "foodName")
-    val foodName: String,
+    val foodName: String?,
 
     @ColumnInfo(name = "kalori")
     val kalori: Double,
 
     @ColumnInfo(name = "lemak")
-    val lemak: Double,
+    val lemak: Double?,
 
     @ColumnInfo(name = "karbo")
-    val karbo: Double,
+    val karbo: Double?,
 
     @ColumnInfo(name = "protein")
-    val protein: Double,
+    val protein: Double?,
 
-    @ColumnInfo(name = "zat besi")
-    val zatBesi: Double,
-
-    @ColumnInfo(name = "kalsium")
-    val kalsium: Double,
+    @ColumnInfo(name = "berat")
+    val weight: Double?,
 
     @ColumnInfo(name = "resultAddedInMillis")
     val resultAddedInMillis: Long,
 
-)
+    )

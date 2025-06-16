@@ -28,7 +28,7 @@
     <string name="_100">100</string>
     <string name="carbo">Karbohidrat</string>
     <string name="protein">Protein</string>
-    <string name="iron">Zat Besi</string>
+    <string name="weigth">Berat</string>
     <string name="calsium">Kalsium</string>
     <string name="date_title">Tanggal Scan:</string>
     <string name="berhasil_dihapus">Berhasil Dihapus</string>
@@ -45,4 +45,5 @@
     <string name="user">Pengguna</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="grams">%s g</string>
 </resources>

@@ -24,8 +24,7 @@ class HistoryDetailActivity : AppCompatActivity() {
     private lateinit var tvLemak: TextView
     private lateinit var tvKarbohidrat: TextView
     private lateinit var tvProtein: TextView
-    private lateinit var tvIron: TextView
-    private lateinit var tvCalcium: TextView
+    private lateinit var tvWeight: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +45,7 @@ class HistoryDetailActivity : AppCompatActivity() {
         tvLemak = binding.tvFat
         tvKarbohidrat = binding.tvCarbo
         tvProtein = binding.tvProtein
-        tvIron = binding.tvIron
-        tvCalcium = binding.tvCalsium
+        tvWeight = binding.tvWeight
 
         val id = intent.getIntExtra(RESULT_ID, 0)
 
@@ -66,8 +64,7 @@ class HistoryDetailActivity : AppCompatActivity() {
                     tvLemak.text = lemak.toString()
                     tvKarbohidrat.text = karbo.toString()
                     tvProtein.text = protein.toString()
-                    tvIron.text = zatBesi.toString()
-                    tvCalcium.text = kalsium.toString()
+                    tvWeight.text = weight.toString()
                     binding.tvDate.text = resultAddedInMillis.convertLongToTime()
                 }
             }

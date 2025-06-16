@@ -1,6 +1,7 @@
 package com.seismiks.nyamapp.data.remote.retrofit
 
 import com.seismiks.nyamapp.data.remote.response.ChatResponse
+import com.seismiks.nyamapp.data.remote.response.ModelResponse
 import com.seismiks.nyamapp.data.remote.response.ProfileResponse
 import com.seismiks.nyamapp.data.remote.response.RecognizeResponse
 import com.seismiks.nyamapp.data.remote.response.SyncProfileResponse
@@ -50,10 +51,10 @@ interface ApiService {
     ): Photo
 
     @Multipart
-    @POST("api/recognize")
+    @POST("api/upload")
     suspend fun postRecognize(
         @Header("Authorization") Bearer: String,
         @Part file: MultipartBody.Part
-    ): RecognizeResponse
+    ): ModelResponse
 
 }

@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.seismiks.nyamapp.R
 import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.local.ScanResult
 import com.seismiks.nyamapp.data.remote.response.MealData
@@ -50,12 +49,11 @@ class ScanResultActivity : AppCompatActivity() {
         }
 
         if (mealData != null) {
-            binding.tvFoodName.text = mealData.foodType
-            binding.tvFat.text = getString(R.string.grams, mealData.fat.toString())
-            binding.tvCarbo.text = getString(R.string.grams, mealData.carbohydrates.toString())
-            binding.tvProtein.text = getString(R.string.grams, mealData.protein.toString())
-            binding.tvCalorie.text = getString(R.string.grams, mealData.calories.toString())
-            binding.tvWeigth.text = getString(R.string.grams, mealData.grams.toString())
+            binding.tvFoodName.text = getString()
+            binding.tvFat.text = mealData.fat.toString()
+            binding.tvCarbo.text = mealData.carbohydrates.toString()
+            binding.tvProtein.text = mealData.protein.toString()
+            binding.tvCalorie.text = mealData.calories.toString()
         }
 
         binding.btnRetry.setOnClickListener {
@@ -107,7 +105,8 @@ class ScanResultActivity : AppCompatActivity() {
         val lemak = mealData?.fat
         val karbo = mealData?.carbohydrates
         val protein = mealData?.protein
-        val weight = mealData?.grams
+        val zatBesi = 7.0
+        val kalsium = 6.0
 
         if (foodName == null || kalori == null || lemak == null || karbo == null || protein == null) {
             Toast.makeText(this, "Invalid food data", Toast.LENGTH_SHORT).show()
@@ -120,7 +119,8 @@ class ScanResultActivity : AppCompatActivity() {
             lemak = lemak,
             karbo = karbo,
             protein = protein,
-            weight = weight,
+            zatBesi = zatBesi,
+            kalsium = kalsium,
             resultAddedInMillis = getMillisFromDate(System.currentTimeMillis()),
             image = copyUriToInternalStorage(this, Uri.parse(imageUri)).toString()
         )

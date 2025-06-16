@@ -60,33 +60,7 @@ class HomeFragment : Fragment() {
 
         pieChart = binding.pieChart
 
-        pieChart.setUsePercentValues(true)
-        pieChart.getDescription().setEnabled(false)
-        pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
-
-        pieChart.setDragDecelerationFrictionCoef(0.95f)
-
-        pieChart.setDrawHoleEnabled(true)
-        pieChart.setHoleColor(Color.WHITE)
-
-        pieChart.setTransparentCircleColor(Color.WHITE)
-        pieChart.setTransparentCircleAlpha(110)
-
-        pieChart.setHoleRadius(58f)
-        pieChart.setTransparentCircleRadius(61f)
-
-        pieChart.setDrawCenterText(true)
-
-        pieChart.setRotationAngle(0f)
-
-        pieChart.setRotationEnabled(true)
-        pieChart.setHighlightPerTapEnabled(true)
-
-        pieChart.animateY(1400, Easing.EaseInOutQuad)
-
-        pieChart.legend.isEnabled = false
-        pieChart.setEntryLabelColor(Color.WHITE)
-        pieChart.setEntryLabelTextSize(12f)
+        setupPieChartStyle()
 
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
@@ -117,6 +91,27 @@ class HomeFragment : Fragment() {
         } */
     }
 
+    private fun setupPieChartStyle() {
+        pieChart.setUsePercentValues(true)
+        pieChart.getDescription().setEnabled(false)
+        pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
+        pieChart.setDragDecelerationFrictionCoef(0.95f)
+        pieChart.setDrawHoleEnabled(true)
+        pieChart.setHoleColor(Color.WHITE)
+        pieChart.setTransparentCircleColor(Color.WHITE)
+        pieChart.setTransparentCircleAlpha(110)
+        pieChart.setHoleRadius(58f)
+        pieChart.setTransparentCircleRadius(61f)
+        pieChart.setDrawCenterText(true)
+        pieChart.setRotationAngle(0f)
+        pieChart.setRotationEnabled(true)
+        pieChart.setHighlightPerTapEnabled(true)
+        pieChart.animateY(1400, Easing.EaseInOutQuad)
+        pieChart.legend.isEnabled = false
+        pieChart.setEntryLabelColor(Color.WHITE)
+        pieChart.setEntryLabelTextSize(12f)
+    }
+
     private fun getMillisFromDate(dateInMillis: Long): Long {
         return Calendar.getInstance().apply {
             timeInMillis = dateInMillis
@@ -133,11 +128,13 @@ class HomeFragment : Fragment() {
                 is Result.Loading -> {
                     // Handle loading state
                 }
+
                 is Result.Success -> {
                     binding.tvUserName.text = result.data.displayName
-                    binding.tvHeightValue.text = result.data.profile?.height.toString()
-                    binding.tvWeightValue.text = result.data.profile?.weight.toString()
+                    binding.tvHeightValue.text = result.data.profile?.height?.toString() ?: "-"
+                    binding.tvWeightValue.text = result.data.profile?.weight?.toString() ?: "-"
                 }
+
                 is Result.Error -> {
                     binding.tvUserName.text = "Error"
                     binding.tvHeightValue.text = "Error"

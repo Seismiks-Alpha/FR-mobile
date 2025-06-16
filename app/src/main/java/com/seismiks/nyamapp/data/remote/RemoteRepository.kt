@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.remote.response.ChatResponse
+import com.seismiks.nyamapp.data.remote.response.ModelResponse
 import com.seismiks.nyamapp.data.remote.response.ProfileResponse
 import com.seismiks.nyamapp.data.remote.response.ResultsItem
 import com.seismiks.nyamapp.data.remote.response.SyncProfileResponse
@@ -113,13 +114,13 @@ class RemoteRepository private constructor(private val apiService: ApiService) {
     fun recognizeFood(
         token: String,
         file: MultipartBody.Part
-    ): LiveData<Result<List<ResultsItem?>?>> =
+    ): LiveData<Result<ModelResponse?>?> =
         liveData {
             emit(Result.Loading)
             try {
                 val authHeader = "Bearer $token"
                 val response = apiService.postRecognize(authHeader, file)
-                emit(Result.Success(response.results))
+                emit(Result.Success(response))
                 Log.d(TAG, "postRecognize: $response")
             } catch (e: Exception) {
                 emit(Result.Error(e.message.toString()))

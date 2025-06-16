@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ApiConfig {
     companion object {
@@ -20,6 +21,9 @@ class ApiConfig {
                     .setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .connectTimeout(30, TimeUnit.SECONDS) // Batas waktu koneksi
+                .readTimeout(60, TimeUnit.SECONDS)    // Batas waktu membaca balasan (paling penting untuk upload)
+                .writeTimeout(60, TimeUnit.SECONDS)   // Batas waktu mengirim data
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://api.seix.me/")
