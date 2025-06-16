@@ -3,6 +3,8 @@ package com.seismiks.nyamapp.ui.camera
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -125,7 +127,13 @@ class CameraActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 val idToken = task.result?.token
                 if (idToken != null) {
-                    val imageFile = uriToFile(imageUri, this).reduceFileImage()
+                    val imageFile = uriToFile(imageUri, this)
+
+                    if (imageFile.length() == 0L) {
+                        Toast.makeText(this, "Gagal memproses gambar, silakan coba lagi.", Toast.LENGTH_SHORT).show()
+                        return@addOnCompleteListener
+                    }
+
                     val requestFileImage =
                         imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     val imageMultipart = MultipartBody.Part.createFormData(
@@ -217,39 +225,57 @@ class CameraActivity : AppCompatActivity() {
 
     private fun performAutoCropAndShow(sourceUri: Uri) {
         try {
-            // 1. Decode URI menjadi Bitmap
             val inputStream = contentResolver.openInputStream(sourceUri)
             val originalBitmap = BitmapFactory.decodeStream(inputStream)
             inputStream?.close()
 
-            // 2. Lakukan cropping di tengah (center crop)
-            val width = originalBitmap.width
-            val height = originalBitmap.height
+            if (originalBitmap == null) {
+                Toast.makeText(this, "Gagal memuat gambar", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            val rotatedBitmap = rotateBitmapIfRequired(originalBitmap, sourceUri)
+
+            val width = rotatedBitmap.width
+            val height = rotatedBitmap.height
             val size = min(width, height)
             val x = if (width > size) (width - size) / 2 else 0
             val y = if (height > size) (height - size) / 2 else 0
-            val croppedBitmap = Bitmap.createBitmap(originalBitmap, x, y, size, size)
+            val croppedBitmap = Bitmap.createBitmap(rotatedBitmap, x, y, size, size)
 
-            // 3. Resize bitmap ke ukuran maksimal 300x300, sama seperti sebelumnya
             val scaledBitmap = Bitmap.createScaledBitmap(croppedBitmap, 300, 300, true)
 
-            // 4. Buat file tujuan baru untuk menyimpan gambar yang sudah dicrop
             val uniqueFileName = "cropped_image_${UUID.randomUUID()}.jpg"
             val destinationFile = File(cacheDir, uniqueFileName)
             val outputStream = FileOutputStream(destinationFile)
             scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
             outputStream.close()
 
-            // 5. Update URI dan tampilkan gambar
             val newUri = Uri.fromFile(destinationFile)
-            currentImageUri = newUri // Simpan URI baru
-            viewModel.setUri(newUri) // Simpan URI ke ViewModel
+            currentImageUri = newUri
+            viewModel.setUri(newUri)
             showImage()
 
         } catch (e: Exception) {
             Log.e("AutoCrop", "Gagal melakukan crop otomatis", e)
             Toast.makeText(this, "Gagal memproses gambar", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun rotateBitmapIfRequired(bitmap: Bitmap, sourceUri: Uri): Bitmap {
+        val inputStream = contentResolver.openInputStream(sourceUri) ?: return bitmap
+        val exif = inputStream.use { ExifInterface(it) }
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+        val matrix = Matrix()
+        when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270f)
+            else -> return bitmap
+        }
+
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
     override fun onSupportNavigateUp(): Boolean {

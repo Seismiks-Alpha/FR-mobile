@@ -56,6 +56,7 @@ class HomeFragment : Fragment() {
         binding.btnChangeFit.setOnClickListener {
             val intent = Intent(requireActivity(), HeightWeightSettingActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
         }
 
         pieChart = binding.pieChart

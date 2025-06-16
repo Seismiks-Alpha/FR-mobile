@@ -137,6 +137,8 @@ class HeightWeightSettingActivity : AppCompatActivity() {
         }
 
         binding.btnCancel.setOnClickListener {
+            val intent = Intent(this, ContainerActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }
