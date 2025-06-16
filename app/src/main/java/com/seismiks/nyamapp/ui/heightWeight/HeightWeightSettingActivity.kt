@@ -1,5 +1,6 @@
 package com.seismiks.nyamapp.ui.heightWeight
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,6 +16,7 @@ import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.remote.retrofit.ProfileUser
 import com.seismiks.nyamapp.databinding.ActivityHeightWeightSettingsBinding
+import com.seismiks.nyamapp.ui.ContainerActivity
 import kotlinx.coroutines.launch
 
 class HeightWeightSettingActivity : AppCompatActivity() {
@@ -157,6 +159,8 @@ class HeightWeightSettingActivity : AppCompatActivity() {
                     binding.btnSave.isEnabled = true
                     Toast.makeText(this, "Profil berhasil disimpan!", Toast.LENGTH_SHORT).show()
                     Log.d("HeightWeightSettingActivity", "putProfile successful: ${result.data}")
+                    val intent = Intent(this, ContainerActivity::class.java)
+                    startActivity(intent)
                     finish()
                 }
 
