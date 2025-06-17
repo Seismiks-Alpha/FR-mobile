@@ -46,4 +46,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="grams">%s g</string>
+    <string name="kcal">%s kcal</string>
+    <string name="warning_exceed">Kalori Harian Sudah Melebihi Batas</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="user_rank">%s \ntotal poin: %s</string>
+    <string name="about">NYAM (Nutrisi Yang Akurat dan Mudah) adalah aplikasi berbasis web yang dikembangkan untuk mempermudah pengguna dalam memantau asupan kalori dan gizi melalui teknologi kecerdasan buatan.
+        Aplikasi ini dapat mendeteksi makanan dari gambar dan menghitung nutrisi secara otomatis.
+        \n\n💻 Developer
+        \n1. Deva Alvyn Budinugraha
+        \n2. Muhammad Reza Harsono
+        \n3. Zakirio Hugoorazaq Wasis
+        \n4. Handika Nur Aziz
+        \n\n🏫 Asal Institusi
+        \nPoliteknik Negeri Jakarta (PNJ),Indonesia</string>
+
 </resources>

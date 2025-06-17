@@ -54,7 +54,7 @@ class ScanResultActivity : AppCompatActivity() {
             binding.tvFat.text = getString(R.string.grams, mealData.fat.toString())
             binding.tvCarbo.text = getString(R.string.grams, mealData.carbohydrates.toString())
             binding.tvProtein.text = getString(R.string.grams, mealData.protein.toString())
-            binding.tvCalorie.text = getString(R.string.grams, mealData.calories.toString())
+            binding.tvCalorie.text = getString(R.string.kcal, mealData.calories.toString())
             binding.tvWeigth.text = getString(R.string.grams, mealData.grams.toString())
         }
 

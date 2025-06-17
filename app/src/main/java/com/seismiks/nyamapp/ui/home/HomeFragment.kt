@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,6 +38,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var pieChart: PieChart
     private lateinit var auth: FirebaseAuth
+    private var totalCalorie: Float = 2000f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,16 +61,15 @@ class HomeFragment : Fragment() {
             requireActivity().finish()
         }
 
-        pieChart = binding.pieChart
-
-        setupPieChartStyle()
-
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
         setupObserver()
 
         fetchData()
+
+        pieChart = binding.pieChart
+        setupPieChartStyle()
 
         // Card click listeners
         /* binding.cardSetting.setOnClickListener {
@@ -113,37 +114,114 @@ class HomeFragment : Fragment() {
         pieChart.setEntryLabelTextSize(12f)
     }
 
-    private fun getMillisFromDate(dateInMillis: Long): Long {
-        return Calendar.getInstance().apply {
-            timeInMillis = dateInMillis
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.timeInMillis
-    }
-
     private fun setupObserver() {
+        // OBSERVER 1: Untuk Profile
         viewModel.profile.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    // Handle loading state
+                    binding.progressBar.visibility = View.VISIBLE
                 }
 
                 is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    // Update UI Profile
                     binding.tvUserName.text = result.data.displayName
                     binding.tvHeightValue.text = result.data.profile?.height?.toString() ?: "-"
                     binding.tvWeightValue.text = result.data.profile?.weight?.toString() ?: "-"
+
+                    auth.currentUser?.getIdToken(false)?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val idToken = task.result.token
+                            idToken?.let {
+                                viewModel.getCaloriesToday(it)
+                            }
+                        }
+                    }
                 }
 
                 is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
                     binding.tvUserName.text = "Error"
                     binding.tvHeightValue.text = "Error"
                     binding.tvWeightValue.text = "Error"
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+        viewModel.caloriesToday.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.pieChart.visibility = View.VISIBLE
+                }
+
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.pieChart.visibility = View.VISIBLE
+
+                    val consumedCalories = result.data.today.totalCalories.toFloat()
+                    val targetCalories = result.data.progress.recommended.toFloat()
+                    val entries = ArrayList<PieEntry>().apply {
+                        add(PieEntry(consumedCalories, "Masuk"))
+                        if (targetCalories > consumedCalories) {
+                            add(PieEntry(targetCalories - consumedCalories, "Sisa"))
+                        } else {
+                            add(PieEntry(0f, "Sisa"))
+                        }
+                    }
+
+                    pieChart.setEntryLabelColor(Color.WHITE)
+                    pieChart.setEntryLabelTypeface(Typeface.DEFAULT_BOLD)
+
+                    val dataSet = PieDataSet(entries, "Asupan Kalori Harian").apply {
+                        colors = listOf(
+                            ContextCompat.getColor(requireContext(), R.color.green),
+                            ContextCompat.getColor(requireContext(), R.color.cream)
+                        )
+                        setDrawIcons(false)
+                        sliceSpace = 3f
+                        iconsOffset = MPPointF(0f, 40f)
+                        selectionShift = 5f
+                    }
+
+                    val data = PieData(dataSet).apply {
+                        setValueFormatter(PercentFormatter(pieChart))
+                        setValueTextSize(15f)
+                        setValueTypeface(Typeface.DEFAULT_BOLD)
+                        setValueTextColor(Color.RED)
+                    }
+
+                    pieChart.apply {
+                        this.data = data
+                        highlightValues(null)
+                        invalidate()
+                        centerText = "${consumedCalories.toInt()} \n dari \n ${targetCalories.toInt()} Kcal"
+                        setCenterTextSize(18f)
+                        setCenterTextTypeface(Typeface.DEFAULT_BOLD)
+                        setCenterTextColor(Color.RED)
+                    }
+
+                    if (targetCalories > consumedCalories) {
+                        binding.tvWarning.visibility = View.GONE
+                        binding.ivWarningLeft.visibility = View.GONE
+                        binding.ivWarningRight.visibility = View.GONE
+                    } else {
+                        binding.tvWarning.visibility = View.VISIBLE
+                        binding.ivWarningLeft.visibility = View.VISIBLE
+                        binding.ivWarningRight.visibility = View.VISIBLE
+                    }
+                }
+
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.e("HomeFragment", "Error caloriesToday: ${result.error}")
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
+
 
     private fun fetchData() {
         auth.currentUser?.getIdToken(true)?.addOnCompleteListener { task ->
@@ -156,53 +234,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
-        // Load calories data
-        viewModel.getCaloriesToday(getMillisFromDate(System.currentTimeMillis()).toString())
-            .observe(viewLifecycleOwner) { calories ->
-                val targetCalories = 2000f
-                val consumedCalories = calories?.toFloat() ?: 0f
-
-                val entries = ArrayList<PieEntry>().apply {
-                    add(PieEntry(consumedCalories, "Masuk"))
-                    if (targetCalories > consumedCalories) {
-                        add(PieEntry(targetCalories - consumedCalories, "Sisa"))
-                    } else {
-                        add(PieEntry(0f, "Sisa"))
-                    }
-                }
-
-                pieChart.setEntryLabelColor(Color.WHITE)
-                pieChart.setEntryLabelTypeface(Typeface.DEFAULT_BOLD)
-
-                val dataSet = PieDataSet(entries, "Asupan Kalori Harian").apply {
-                    colors = listOf(
-                        ContextCompat.getColor(requireContext(), R.color.green),
-                        ContextCompat.getColor(requireContext(), R.color.cream)
-                    )
-                    setDrawIcons(false)
-                    sliceSpace = 3f
-                    iconsOffset = MPPointF(0f, 40f)
-                    selectionShift = 5f
-                }
-
-                val data = PieData(dataSet).apply {
-                    setValueFormatter(PercentFormatter(pieChart))
-                    setValueTextSize(15f)
-                    setValueTypeface(Typeface.DEFAULT_BOLD)
-                    setValueTextColor(Color.RED)
-                }
-
-                pieChart.apply {
-                    this.data = data
-                    highlightValues(null)
-                    invalidate()
-                    centerText = "${consumedCalories} \n dari \n $targetCalories Kcal"
-                    setCenterTextSize(18f)
-                    setCenterTextTypeface(Typeface.DEFAULT_BOLD)
-                    setCenterTextColor(Color.RED)
-                }
-            }
     }
 
     override fun onDestroyView() {

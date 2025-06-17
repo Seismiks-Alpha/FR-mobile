@@ -1,21 +1,21 @@
 package com.seismiks.nyamapp.ui.history
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seismiks.nyamapp.R
-import com.seismiks.nyamapp.data.local.ScanResult
+import com.seismiks.nyamapp.data.remote.response.FoodHistory
+import com.seismiks.nyamapp.data.remote.response.HistoryViewItem
 import com.seismiks.nyamapp.databinding.RowHistoryBinding
-import com.seismiks.nyamapp.utils.convertLongToTime
+import com.seismiks.nyamapp.utils.DateUtils.toFormattedDateTime
 
-class HistoryAdapter(private val clickListener: (ScanResult) -> Unit) :
-    PagingDataAdapter<ScanResult, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter(private val clickListener: (HistoryViewItem) -> Unit) :
+    ListAdapter<HistoryViewItem, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK) {
 
     override fun onBindViewHolder(holder: HistoryAdapter.HistoryViewHolder, position: Int) {
         getItem(position)?.let {
@@ -31,42 +31,37 @@ class HistoryAdapter(private val clickListener: (ScanResult) -> Unit) :
         return HistoryViewHolder(binding)
     }
 
-    inner class HistoryViewHolder(private val binding: RowHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class HistoryViewHolder(private val binding: RowHistoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        private lateinit var scanResult: ScanResult
         private val tvName: TextView = binding.tvHistoryTitle
         private val tvKalori: TextView = binding.tvKalori
         private val tvDate: TextView = binding.tvDate
         private val ivFood: ImageView = binding.ivFood
 
-        fun bind(data: ScanResult, click: (ScanResult) -> Unit) {
-            this.scanResult = data
+        fun bind(data: HistoryViewItem, click: (HistoryViewItem) -> Unit) {
 
-            scanResult.apply {
-                tvName.text = foodName
-                tvKalori.text = kalori.toString()
-                tvDate.text = resultAddedInMillis.convertLongToTime()
-                Glide.with(binding.root.context)
-                    .load(Uri.parse(image))
-                    .placeholder(R.drawable.intro)
-                    .into(binding.ivFood)
-            }
+            tvName.text = data.foodName
+            tvKalori.text = data.calories.toString()
+            tvDate.text = data.date.toFormattedDateTime()
+            Glide.with(binding.root.context)
+                .load("https://nyam.seix.me" + data.imageUrl)
+                .placeholder(R.drawable.intro)
+                .into(ivFood)
 
             itemView.setOnClickListener {
-                clickListener(scanResult)
+                clickListener(data)
             }
         }
-
-        fun getScanResult(): ScanResult = scanResult
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ScanResult>() {
-            override fun areItemsTheSame(oldItem: ScanResult, newItem: ScanResult): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryViewItem>() {
+            override fun areItemsTheSame(oldItem: HistoryViewItem, newItem: HistoryViewItem): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: ScanResult, newItem: ScanResult): Boolean {
+            override fun areContentsTheSame(oldItem: HistoryViewItem, newItem: HistoryViewItem): Boolean {
                 return oldItem == newItem
             }
         }

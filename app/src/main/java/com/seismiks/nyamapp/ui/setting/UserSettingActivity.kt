@@ -73,7 +73,7 @@ class UserSettingActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 val idToken = task.result?.token
                 if (idToken != null) {
-                    viewModel.getProfileInfo(idToken)
+                    viewModel.fetchAllData(idToken)
                 } else {
                     Log.e(TAG, "ID Token is null")
                 }

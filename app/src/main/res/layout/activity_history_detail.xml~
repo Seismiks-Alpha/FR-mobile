@@ -8,6 +8,28 @@
     android:background="@color/green_yellow"
     tools:context=".ui.result.ScanResultActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/my_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cream"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:title="test"
+            app:titleTextColor="@color/white"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/white"
+            app:subtitleTextColor="@color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_result"
         android:layout_width="match_parent"
@@ -95,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/kcal"
+                        android:text="@string/_100"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -138,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/grams"
+                        android:text="@string/_100"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -181,7 +203,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/grams"
+                        android:text="@string/_100"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -224,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/grams"
+                        android:text="@string/_100"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -234,7 +256,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_grams"
+                android:id="@+id/card_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -262,12 +284,12 @@
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_weigth"
+                        android:id="@+id/tv_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="50dp"
                         android:fontFamily="@font/jockey_one_font"
-                        android:text="@string/grams"
+                        android:text="@string/_100"
                         android:textAlignment="center"
                         android:textColor="@color/background"
                         android:textSize="16sp"
@@ -276,6 +298,18 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/background"
+                android:fontFamily="@font/jockey_one_font"
+                android:text="dd/mm/yyyy"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_weight"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -283,31 +317,17 @@
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_retry"
+        android:id="@+id/btn_delete"
         style="?attr/materialIconButtonFilledStyle"
-        app:icon="@drawable/ic_add"
+        app:icon="@drawable/ic_delete"
         android:layout_marginTop="8dp"
         app:iconSize="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/cream"
+        android:backgroundTint="@color/red"
         app:iconTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_result"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_result" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_finish"
-        style="?attr/materialIconButtonFilledStyle"
-        app:icon="@drawable/ic_home"
-        android:layout_marginTop="8dp"
-        app:iconSize="40dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue"
-        app:iconTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_retry"
-        app:layout_constraintTop_toBottomOf="@id/card_result" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

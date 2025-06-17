@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.remote.response.ChatResponse
+import com.seismiks.nyamapp.data.remote.response.HistoryAllResponse
+import com.seismiks.nyamapp.data.remote.response.HistoryTodayResponse
+import com.seismiks.nyamapp.data.remote.response.LeaderboardResponse
 import com.seismiks.nyamapp.data.remote.response.ModelResponse
 import com.seismiks.nyamapp.data.remote.response.ProfileResponse
-import com.seismiks.nyamapp.data.remote.response.ResultsItem
 import com.seismiks.nyamapp.data.remote.response.SyncProfileResponse
 import com.seismiks.nyamapp.data.remote.retrofit.ApiService
 import com.seismiks.nyamapp.data.remote.retrofit.Photo
@@ -128,6 +130,70 @@ class RemoteRepository private constructor(private val apiService: ApiService) {
             }
         }
 
+    fun getLeaderboard(token: String): LiveData<Result<LeaderboardResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val authHeader = "Bearer $token"
+            val response = apiService.getLeaderboard(authHeader)
+            emit(Result.Success(response))
+            Log.d(TAG, "getLeaderboard: $response")
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+            Log.d(TAG, "getLeaderboard: ${e.message.toString()}")
+        }
+    }
+
+    fun getHistoryTodayAndYesterday(token: String): LiveData<Result<HistoryTodayResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val authHeader = "Bearer $token"
+            val response = apiService.getHistoryToday(authHeader)
+            emit(Result.Success(response))
+            Log.d(TAG, "getHistoryToday: $response")
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+            Log.d(TAG, "getHistoryToday: ${e.message.toString()}")
+        }
+    }
+
+    fun getHistoryAll(token: String): LiveData<Result<HistoryAllResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val authHeader = "Bearer $token"
+            val response = apiService.getHistoryAll(authHeader)
+            emit(Result.Success(response))
+            Log.d(TAG, "getHistoryAll: $response")
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+            Log.d(TAG, "getHistoryAll: ${e.message.toString()}")
+        }
+    }
+
+    fun deleteHistory(token: String, id: String): LiveData<Result<Unit>> = liveData {
+        emit(Result.Loading)
+        try {
+            val authHeader = "Bearer $token"
+            val response = apiService.deleteHistory(authHeader, id)
+            emit(Result.Success(response))
+            Log.d(TAG, "deleteHistory: $response")
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+            Log.d(TAG, "deleteHistory: ${e.message.toString()}")
+        }
+    }
+
+    fun deleteAllHistory(token: String): LiveData<Result<Unit>> = liveData {
+        emit(Result.Loading)
+        try {
+            val authHeader = "Bearer $token"
+            val response = apiService.deleteAllHistory(authHeader)
+            emit(Result.Success(response))
+            Log.d(TAG, "deleteAllHistory: $response")
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+            Log.d(TAG, "deleteAllHistory: ${e.message.toString()}")
+        }
+    }
 
     companion object {
         const val TAG = "Remote Repository"

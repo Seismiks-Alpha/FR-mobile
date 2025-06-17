@@ -21,6 +21,7 @@ import com.seismiks.nyamapp.R
 import com.seismiks.nyamapp.ViewModelFactory
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.databinding.ActivityCameraBinding
+import com.seismiks.nyamapp.ui.ContainerActivity
 import com.seismiks.nyamapp.ui.result.ScanResultActivity
 import com.seismiks.nyamapp.utils.getImageUri
 import com.seismiks.nyamapp.utils.reduceFileImage
@@ -66,7 +67,16 @@ class CameraActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        binding.btnCamera.setOnClickListener { startCamera() }
+        binding.btnCamera.setOnClickListener {
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Panduan Foto")
+                .setMessage("Pastikan Foto Makanan diambil dari atas dengan jarak sekitar 30 cm dari kamera")
+                .setPositiveButton("Oke") { _, _ ->
+                    startCamera()
+                }
+                .setNegativeButton("Batal", null)
+                .show()
+        }
         binding.btnUpload.setOnClickListener {
             uploadImage()
         }
@@ -130,7 +140,11 @@ class CameraActivity : AppCompatActivity() {
                     val imageFile = uriToFile(imageUri, this)
 
                     if (imageFile.length() == 0L) {
-                        Toast.makeText(this, "Gagal memproses gambar, silakan coba lagi.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "Gagal memproses gambar, silakan coba lagi.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         return@addOnCompleteListener
                     }
 
@@ -265,7 +279,8 @@ class CameraActivity : AppCompatActivity() {
     private fun rotateBitmapIfRequired(bitmap: Bitmap, sourceUri: Uri): Bitmap {
         val inputStream = contentResolver.openInputStream(sourceUri) ?: return bitmap
         val exif = inputStream.use { ExifInterface(it) }
-        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+        val orientation =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
         val matrix = Matrix()
         when (orientation) {

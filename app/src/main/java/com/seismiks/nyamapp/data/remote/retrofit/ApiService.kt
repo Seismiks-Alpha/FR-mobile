@@ -1,6 +1,10 @@
 package com.seismiks.nyamapp.data.remote.retrofit
 
+import androidx.paging.PagingSource
 import com.seismiks.nyamapp.data.remote.response.ChatResponse
+import com.seismiks.nyamapp.data.remote.response.HistoryAllResponse
+import com.seismiks.nyamapp.data.remote.response.HistoryTodayResponse
+import com.seismiks.nyamapp.data.remote.response.LeaderboardResponse
 import com.seismiks.nyamapp.data.remote.response.ModelResponse
 import com.seismiks.nyamapp.data.remote.response.ProfileResponse
 import com.seismiks.nyamapp.data.remote.response.RecognizeResponse
@@ -8,12 +12,14 @@ import com.seismiks.nyamapp.data.remote.response.SyncProfileResponse
 import com.seismiks.nyamapp.data.remote.retrofit.chat.PostChat
 import okhttp3.MultipartBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface ApiService {
     @POST("api/auth/sync")
@@ -56,5 +62,31 @@ interface ApiService {
         @Header("Authorization") Bearer: String,
         @Part file: MultipartBody.Part
     ): ModelResponse
+
+    @GET("api/leaderboard")
+    suspend fun getLeaderboard(
+        @Header("Authorization") Bearer: String
+    ): LeaderboardResponse
+
+    @GET("api/food-history/today")
+    suspend fun getHistoryToday(
+        @Header("Authorization") Bearer: String
+    ): HistoryTodayResponse
+
+    @GET("api/food-history/all")
+    suspend fun getHistoryAll(
+        @Header("Authorization") Bearer: String
+    ): HistoryAllResponse
+
+    @DELETE("api/food-history/{id}")
+    suspend fun deleteHistory(
+        @Header("Authorization") Bearer: String,
+        @Path("id") id: String
+    )
+
+    @DELETE("api/all/food-history")
+    suspend fun deleteAllHistory(
+        @Header("Authorization") Bearer: String
+    )
 
 }

@@ -6,25 +6,31 @@ import androidx.lifecycle.ViewModel
 import com.seismiks.nyamapp.data.Result
 import com.seismiks.nyamapp.data.local.ResultRepository
 import com.seismiks.nyamapp.data.remote.RemoteRepository
+import com.seismiks.nyamapp.data.remote.response.HistoryTodayResponse
+import com.seismiks.nyamapp.data.remote.response.InfoToday
 import com.seismiks.nyamapp.data.remote.response.ProfileResponse
 
 class HomeViewModel(
-    private val repository: ResultRepository,
     private val remoteRepository: RemoteRepository
 ) : ViewModel() {
 
-    // MutableLiveData untuk menampung hasil sinkronisasi profil
     private val _profileResult = MutableLiveData<Result<ProfileResponse>>()
 
-    // LiveData yang akan diobservasi oleh HomeActivity
     val profile: LiveData<Result<ProfileResponse>> = _profileResult
 
-    fun getCaloriesToday(date: String): LiveData<Int> {
-        return repository.getCaloriesToday(date)
+    private val _caloriesToday = MutableLiveData<Result<HistoryTodayResponse>>()
+    val caloriesToday: LiveData<Result<HistoryTodayResponse>> = _caloriesToday
+
+    fun getCaloriesToday(tokenId: String) {
+        _caloriesToday.value = Result.Loading
+        remoteRepository.getHistoryTodayAndYesterday(tokenId).observeForever { caloriesToday ->
+            _caloriesToday.value = caloriesToday
+        }
     }
 
     fun getProfileInfo(tokenId: String) {
         _profileResult.value = Result.Loading
-        remoteRepository.getProfile(tokenId).observeForever { result -> _profileResult.value = result }
+        remoteRepository.getProfile(tokenId)
+            .observeForever { result -> _profileResult.value = result }
     }
 }

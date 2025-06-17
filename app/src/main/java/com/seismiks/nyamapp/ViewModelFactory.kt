@@ -1,5 +1,6 @@
 package com.seismiks.nyamapp
 
+import HistoryViewModel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +11,6 @@ import com.seismiks.nyamapp.ui.camera.CameraViewModel
 import com.seismiks.nyamapp.ui.chat.ChatViewModel
 import com.seismiks.nyamapp.ui.detail.HistoryDetailViewModel
 import com.seismiks.nyamapp.ui.heightWeight.HeightWeightViewModel
-import com.seismiks.nyamapp.ui.history.HistoryViewModel
 import com.seismiks.nyamapp.ui.home.HomeViewModel
 import com.seismiks.nyamapp.ui.result.ScanResultViewModel
 import com.seismiks.nyamapp.ui.setting.SettingViewModel
@@ -41,15 +41,15 @@ class ViewModelFactory private constructor(
             }
 
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
-                HistoryViewModel(resultRepository) as T
+                HistoryViewModel(RemoteRepository) as T
             }
 
             modelClass.isAssignableFrom(HistoryDetailViewModel::class.java) -> {
-                HistoryDetailViewModel(resultRepository) as T
+                HistoryDetailViewModel(RemoteRepository) as T
             }
 
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(resultRepository, RemoteRepository) as T
+                HomeViewModel(RemoteRepository) as T
             }
 
             modelClass.isAssignableFrom(ChatViewModel::class.java) -> {
